@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" style="background:url(img/HomeImg.jpg) no-repeat center center fixed; background-color: #577492">
 <head runat="server">
     <meta charset = "UTF-8">
 <!-- Bootstrap Core CSS -->
@@ -21,13 +21,27 @@
 	    <![endif]-->
 </head>
 <body>
-    	<div class="container" style="padding-top:20px">
-		<div class="row">
-			
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="border-radius:0px">
+		<div class="container">
+			<a class="navbar-brand" href="#">Book Exchange</a>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+		    	<li ><a href="#"><span class="glyphicon glyphicon-eye-open"></span> Catalog</a></li>
+		    	<li ><a href="#"><span class="glyphicon glyphicon-user"></span> About</a></li>
+      		</ul>
+      		<ul class="nav navbar-nav navbar-right">
+       			 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+		    </ul>
 		</div>
-	</div>
-
-
+	</nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+             <%--   <h1><img src="img/HomeImg.jpg"</h1>--%>
+            </div>
+        </div>
+        <!----</h1> -->
+    </div>
 
 	<!-- jQuery -->
     <script src="js/jquery.js"></script>
