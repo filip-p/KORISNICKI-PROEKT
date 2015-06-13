@@ -34,5 +34,10 @@ public partial class Cart : System.Web.UI.Page
     protected void lnkCatalog_Click(object sender, EventArgs e)
     {
         Response.Redirect("Catalog.aspx");
+
+    }
+    protected void lnkBrand_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Home.aspx");
     }
 }

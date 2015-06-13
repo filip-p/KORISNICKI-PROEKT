@@ -35,4 +35,8 @@ public partial class Wishlist : System.Web.UI.Page
     {
         Response.Redirect("Catalog.aspx");
     }
+    protected void lnkBrand_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Home.aspx");
+    }
 }
