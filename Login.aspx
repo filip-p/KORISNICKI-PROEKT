@@ -10,6 +10,8 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/test.css" rel="stylesheet">
     <link href="fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
     <!-- Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
@@ -51,13 +53,13 @@
                                 <asp:LinkButton ID="lnkContactAbout" runat="server" OnClick="lnkContactAbout_Click">Contact/About</asp:LinkButton></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                                <li class="active">
+                            <li class="active">
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click">Login/Register</asp:LinkButton></li>
                             <li>
                                 <asp:LinkButton ID="lnkCart" runat="server" OnClick="lnkCart_Click">Cart</asp:LinkButton></li>
                             <li>
                                 <asp:LinkButton ID="lnkWishlist" runat="server" OnClick="lnkWishlist_Click">Wishlist</asp:LinkButton></li>
-                        
+
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -68,117 +70,101 @@
 
         </div>
         <!-- /.container-fluid -->
-        <div class="container" style="margin-bottom: -15em">
+        <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <h1 class="page-header text-center">Login</h1>
+                    <div class="text-center">
+                        <asp:ValidationSummary ID="LoginValidationSummary" runat="server" ValidationGroup="Login" ForeColor="#CC0000" HeaderText="The list of errors that occured:" />
+                        <asp:TextBox ID="tbLoggedIn" runat="server" class="text-center" EnableViewState="False" ReadOnly="True"></asp:TextBox>
+                    </div>
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                            <label for="inputLoginUsername" class="col-sm-2 control-label">Username</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                <asp:TextBox ID="inputLoginUsername" CssClass="form-control" runat="server" EnableViewState="False"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="inputLoginUsernameValidator" runat="server" ErrorMessage="You must specify a Username!" ControlToValidate="inputLoginUsername" Display="None" ValidationGroup="Login"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                            <label for="inputLoginPassword" class="col-sm-2 control-label">Password</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                <asp:TextBox runat="server" ID="inputLoginPassword" CssClass="form-control" TextMode="Password" EnableViewState="False"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="inputLoginPasswordValidator" runat="server" ErrorMessage="You must specify a password!" ControlToValidate="inputLoginPassword" Display="None" ValidationGroup="Login"></asp:RequiredFieldValidator>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class=" col-sm-12 text-center">
+                                <asp:Button runat="server" ID="btnLogin" class="btn btn-info btn-lg" OnClick="btnLogin_Click" Text="Login" ValidationGroup="Login" />
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">Sign in</button>
-                            </div>
-                        </div>
                     </div>
-                    <h4 class="text-center">Don't have an account? Register for free!</h4>
+                    <hr />
+                    <h4 class="text-center">Don't have an account? Register for free!<span class="glyphicon glyphicon-chevron-right"></span></h4>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <h1 class="page-header text-center">Register</h1>
+                    <div>
+                        <asp:ValidationSummary ID="ValidationSummaryRegister" runat="server" ValidationGroup="Register" ForeColor="#CC0000" HeaderText="The following errors occured:" />
+                        <asp:TextBox ID="tbHasUser" runat="server" class="form-control text-center" EnableViewState="False" ReadOnly="True"></asp:TextBox>
+                    </div>
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
                             <label for="inputUsername" class="col-sm-2 control-label">Username</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputUsername" placeholder="Username">
+                                <asp:RequiredFieldValidator ID="RequiredUsernameField" runat="server" ErrorMessage="You must specify a Username!" ControlToValidate="inputUsername" Display="None" ValidationGroup="Register"></asp:RequiredFieldValidator>
+                                <asp:TextBox ID="inputUsername" placeholder="Username" runat="server" class="form-control" EnableViewState="False"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputFaculty" class="col-sm-2 control-label">Faculty</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputFaculty" placeholder="Faculty">
+                                <asp:RequiredFieldValidator ID="RequiredFacultyValidator" runat="server" ErrorMessage="You must specify a Faculty" ValidationGroup="Register" ControlToValidate="inputFaculty" Display="None"></asp:RequiredFieldValidator>
+                                <asp:TextBox ID="inputFaculty" placeholder="Faculty" runat="server" class="form-control"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail" class="col-sm-2 control-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                <asp:TextBox ID="inputEmail" placeholder="Email" runat="server" CssClass="form-control"></asp:TextBox>
+                                <asp:RegularExpressionValidator ID="EmailRegularExpression" runat="server" ErrorMessage="Provide a valid Email!" ControlToValidate="inputEmail" Display="None" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ValidationGroup="Register"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="RequiredEmailValidator" runat="server" ErrorMessage="You must specify an Email" Display="None" ControlToValidate="inputEmail" ValidationGroup="Register"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-2 control-label">Password</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                <asp:TextBox ID="inputPassword" placeholder="Password" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RequiredPasswordValidator" runat="server" ErrorMessage="You must specify a Password" Display="None" ControlToValidate="inputPassword" ValidationGroup="Register"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputConfirmPassword" class="col-sm-2 control-label">Confirm password</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm password">
+                                <asp:TextBox ID="inputConfirmPassword" placeholder="Confirm Password" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                                <asp:CompareValidator ID="comparePasswordsValidator" runat="server" ControlToCompare="inputPassword" ControlToValidate="inputConfirmPassword" ErrorMessage="Passwords don't match!" Display="None" ValidationGroup="Register"></asp:CompareValidator>
                             </div>
                         </div>
                         <div class="row hidden-xs hidden-sm">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-sm-3" style="padding-right: 0px;">
-                                        <hr style="border-top: 3px solid #33CC33">
-                                    </div>
-                                    <div class="col-sm-3" style="padding-left: 0px; padding-right: 0px;">
-                                        <hr style="border-top: 3px solid #FFFFCC">
-                                    </div>
-                                    <div class="col-sm-3" style="padding-left: 0px; padding-right: 0px;">
-                                        
-                                        
-                                        
-                                        <hr style="border-top: 3px solid #FF9933">
-                                    </div>
-                                    <div class="col-sm-3" style="padding-left: 0px; padding-right: 0px;">
-                                        <hr style="border-top: 3px solid #FF0000">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-sm-3" style="padding-left: 0px; padding-right: 0px;">
-                                        <hr style="border-top: 3px solid #FF33CC">
-                                    </div>
-                                    <div class="col-sm-3" style="padding-left: 0px; padding-right: 0px;">
-                                        <hr style="border-top: 3px solid #990099">
-                                    </div>
-                                    <div class="col-sm-3" style="padding-left: 0px; padding-right: 0px;">
-                                        <hr style="border-top: 3px solid #0000FF">
-                                    </div>
-                                    <div class="col-sm-3" style="padding-left: 0px;">
-                                        <hr style="border-top: 3px solid #00CCFF">
-                                    </div>
-                                </div>
+                            <div class="col-md-12">
+                                <hr class="style-rainbow">
                             </div>
                         </div>
                         <div class="visible-md visible-lg ">
                             <div class="col-md-12 ">
-                                <asp:Button runat="server" ID="buttonRegister" class="btn btn-primary btn-block" OnClick="buttonRegister_Click" Text="Register" />
+                                <asp:Button runat="server" ID="buttonRegister" class="btn btn-primary btn-block" OnClick="buttonRegister_Click" Text="Register" ValidationGroup="Register" />
                             </div>
 
                         </div>
                         <div class="visible-sm visible-xs">
                             <div class="col-sm-12 form-group ">
-                               <asp:Button ID="buttonSmallRegister" class="btn btn-primary btn-block" runat="server" OnClick="buttonSmallRegister_Click" Text="Register" />
-                          </div>
+                                <asp:Button ID="buttonSmallRegister" class="btn btn-primary btn-block" runat="server" OnClick="buttonSmallRegister_Click" Text="Register" ValidationGroup="Register" />
+                            </div>
 
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <div class="footer-below">
@@ -194,8 +180,6 @@
 
 
 
-        <!-- jQuery -->
-        <script src="js/jquery.js"></script>
 
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>

@@ -29,7 +29,7 @@
             <nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header" style="font-size: 1.5em">
+                   <div class="navbar-header" style="font-size: 1.5em">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-3">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
@@ -55,7 +55,7 @@
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click">Login/Register</asp:LinkButton></li>
                             <li class="active">
                                 <asp:LinkButton ID="lnkCart" runat="server" OnClick="lnkCart_Click">Cart</asp:LinkButton></li>
-                            <li>
+                            <li >
                                 <asp:LinkButton ID="lnkWishlist" runat="server" OnClick="lnkWishlist_Click">Wishlist</asp:LinkButton></li>
                         
                         </ul>
@@ -73,7 +73,7 @@
 
 
 
-        
+
         <!-- jQuery -->
         <script src="js/jquery.js"></script>
 
@@ -81,7 +81,7 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap.js"></script>
 
-        
+
     </form>
 </body>
 </html>

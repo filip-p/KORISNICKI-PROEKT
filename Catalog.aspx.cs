@@ -9,6 +9,15 @@ public partial class Catalog : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["New"] != null)
+        {
+            lnkLoginRegister.Text = "Logout";
+        }
+        else
+        {
+            lnkLoginRegister.Text = "Login/Register";
+            Response.Redirect("Login.aspx");
+        }
 
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
@@ -21,7 +30,16 @@ public partial class Catalog : System.Web.UI.Page
     }
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Login.aspx");
+        if (lnkLoginRegister.Text == "Login/Register")
+        {
+            Response.Redirect("Login.aspx");
+        }
+        else if (lnkLoginRegister.Text == "Logout")
+        {
+            //TODO logging out
+            Session["New"] = null;
+            Response.Redirect("Login.aspx");
+        }
     }
     protected void lnkContactAbout_Click(object sender, EventArgs e)
     {
@@ -35,6 +53,7 @@ public partial class Catalog : System.Web.UI.Page
     {
         Response.Redirect("Catalog.aspx");
     }
+
     protected void lnkBrand_Click(object sender, EventArgs e)
     {
         Response.Redirect("Home.aspx");
