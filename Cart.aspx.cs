@@ -16,7 +16,7 @@ public partial class Cart : System.Web.UI.Page
         else
         {
             lnkLoginRegister.Text = "Login/Register";
-            Response.Redirect("Login.aspx");
+            Response.Redirect("Login.aspx?err=1");
         }
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)

@@ -16,46 +16,64 @@ public partial class Catalog : System.Web.UI.Page
         else
         {
             lnkLoginRegister.Text = "Login/Register";
-            Response.Redirect("Login.aspx");
+            Response.Redirect("Login.aspx?err=1", false);
+            Context.ApplicationInstance.CompleteRequest();
+
         }
 
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Home.aspx");
+        Response.Redirect("Home.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
+
     }
     protected void lnkWishlist_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Wishlist.aspx");
+        Response.Redirect("Wishlist.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
+
     }
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
         if (lnkLoginRegister.Text == "Login/Register")
         {
-            Response.Redirect("Login.aspx");
+            Response.Redirect("Login.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+
         }
         else if (lnkLoginRegister.Text == "Logout")
         {
-            //TODO logging out
+
             Session["New"] = null;
-            Response.Redirect("Login.aspx");
+            Response.Redirect("Login.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+
         }
     }
     protected void lnkContactAbout_Click(object sender, EventArgs e)
     {
-        Response.Redirect("ContactAbout.aspx");
+        Response.Redirect("ContactAbout.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
+
     }
     protected void lnkCart_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Cart.aspx");
+        Response.Redirect("Cart.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
+
     }
     protected void lnkCatalog_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Catalog.aspx");
+        Response.Redirect("Catalog.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
+
     }
 
     protected void lnkBrand_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Home.aspx");
+        Response.Redirect("Home.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
+
     }
 }

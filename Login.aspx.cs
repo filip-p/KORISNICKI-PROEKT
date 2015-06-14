@@ -8,83 +8,110 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 public partial class Login : System.Web.UI.Page
 {
+    bool used = false;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["New"] != null)
-        {
-            lnkLoginRegister.Text = "Logout";
-        }
-        else
-        {
-            lnkLoginRegister.Text = "Login/Register";
-        }
         tbLoggedIn.Visible = false;
         tbHasUser.Visible = false;
-        if (IsPostBack)
+        if (this.IsPostBack)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString);
             conn.Open();
-            string checkuser = "SELECT count(*) FROM UserData where username='" + inputUsername.Text + "'";
+            string checkuser = "SELECT count(*) FROM UserData WHERE username='" + inputUsername.Text + "'";
             SqlCommand command = new SqlCommand(checkuser, conn);
             int temp = Convert.ToInt32(command.ExecuteScalar().ToString());
-            if (temp == 1)
-            {
+            if (temp > 0)          {
                 tbHasUser.Visible = true;
                 tbHasUser.Text = "That Username already exists, please select a new one.";
+                used = true;
             }
             conn.Close();
         }
         else
         {
             tbHasUser.Text = "";
+            if (Session["New"] != null)
+            {
+                lnkLoginRegister.Text = "Logout";
+            }
+            else
+            {
+                lnkLoginRegister.Text = "Login/Register";
+            }
+            if (Request.QueryString["err"] != null)
+            {
+                tbLoggedIn.Text = "You have to be Logged in to view the Catalog, your Cart and your Wishlist!";
+                tbLoggedIn.Visible = true;
+
+            }
+        
         }
+     
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Home.aspx");
+        Response.Redirect("Home.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
     }
     protected void lnkWishlist_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Wishlist.aspx");
+        Response.Redirect("Wishlist.aspx",false);
+        Context.ApplicationInstance.CompleteRequest();
+
     }
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
         if (lnkLoginRegister.Text == "Login/Register")
         {
-            Response.Redirect("Login.aspx");
+            Response.Redirect("Login.aspx",false);
+            Context.ApplicationInstance.CompleteRequest();
         }
         else if (lnkLoginRegister.Text == "Logout")
         {
         
             Session["New"] = null;
-            Response.Redirect("Login.aspx");
+            Response.Redirect("Login.aspx",false);
+            Context.ApplicationInstance.CompleteRequest();
+
         }
     }
     protected void lnkContactAbout_Click(object sender, EventArgs e)
     {
-        Response.Redirect("ContactAbout.aspx");
+        Response.Redirect("ContactAbout.aspx",false);
+        Context.ApplicationInstance.CompleteRequest();
     }
     protected void lnkCart_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Cart.aspx");
+        Response.Redirect("Cart.aspx",false);
+        Context.ApplicationInstance.CompleteRequest();
     }
     protected void lnkCatalog_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Catalog.aspx");
+        Response.Redirect("Catalog.aspx",false);
+        Context.ApplicationInstance.CompleteRequest();
     }
 
     protected void lnkBrand_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Home.aspx");
+        Response.Redirect("Home.aspx",false);
+        Context.ApplicationInstance.CompleteRequest();
     }
 
     protected void buttonRegister_Click(object sender, EventArgs e)
     {
-        registering();
+        if (!used)
+        {
+            registering();
+        }
+        used = false;
     }
     protected void buttonSmallRegister_Click(object sender, EventArgs e)
     {
-        registering();
+        if (!used)
+        {
+            registering();
+        }
+        used = false;
     }
   
     protected void registering()
@@ -103,7 +130,7 @@ public partial class Login : System.Web.UI.Page
             command.Parameters.AddWithValue("@facult", inputFaculty.Text);
             command.ExecuteNonQuery();
             tbHasUser.Visible = true;
-            tbHasUser.Text = "Registration was succesfull, welcome to BookExchange";
+            tbHasUser.Text = "Registration was successful, welcome to BookExchange";
 
 
         }

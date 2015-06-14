@@ -15,7 +15,7 @@
     <!-- Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <title>Book Exchange Home</title>
+    <title>Book Exchange Login/Registration Page</title>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -74,10 +74,11 @@
             <div class="row">
                 <div class="col-lg-6">
                     <h1 class="page-header text-center">Login</h1>
-                    <div class="text-center">
-                        <asp:ValidationSummary ID="LoginValidationSummary" runat="server" ValidationGroup="Login" ForeColor="#CC0000" HeaderText="The list of errors that occured:" />
-                        <asp:TextBox ID="tbLoggedIn" runat="server" class="text-center" EnableViewState="False" ReadOnly="True"></asp:TextBox>
+                    <div class="col-md-12">
+                        <asp:TextBox ID="tbLoggedIn" runat="server" CssClass="form-control text-center" EnableViewState="False" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
+                        <asp:ValidationSummary ID="LoginValidationSummary" runat="server" ValidationGroup="Login" ForeColor="#CC0000" HeaderText="The following errors occured:" />
                     </div>
+                    <hr />
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
                             <label for="inputLoginUsername" class="col-sm-2 control-label">Username</label>
@@ -99,17 +100,18 @@
                                 <asp:Button runat="server" ID="btnLogin" class="btn btn-info btn-lg" OnClick="btnLogin_Click" Text="Login" ValidationGroup="Login" />
                             </div>
                         </div>
-
                     </div>
                     <hr />
-                    <h4 class="text-center">Don't have an account? Register for free!<span class="glyphicon glyphicon-chevron-right"></span></h4>
+                    <h4 class="hidden-xs hidden-sm text-center">Don't have an account? Register for free! <span class="glyphicon glyphicon-chevron-right"></span></h4>
+                    <h4 class="hidden-lg hidden-md text-center">Don't have an account? Register for free! <span class="glyphicon glyphicon-chevron-down"></h4>
                 </div>
                 <div class="col-lg-6">
                     <h1 class="page-header text-center">Register</h1>
-                    <div>
+                    <div class="col-md-12">
                         <asp:ValidationSummary ID="ValidationSummaryRegister" runat="server" ValidationGroup="Register" ForeColor="#CC0000" HeaderText="The following errors occured:" />
-                        <asp:TextBox ID="tbHasUser" runat="server" class="form-control text-center" EnableViewState="False" ReadOnly="True"></asp:TextBox>
+                        <asp:TextBox ID="tbHasUser" runat="server" class="form-control text-center" EnableViewState="False" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
                     </div>
+                    <hr />
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
                             <label for="inputUsername" class="col-sm-2 control-label">Username</label>
