@@ -4,11 +4,11 @@
 <html>
 <head runat="server">
     <meta charset="UTF-8">
-    <%--<meta name="viewport" content="width=device-width, initial-scale=1">--%>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/test.css" rel="stylesheet">
+    <link href="css/customCss.css" rel="stylesheet">
     <link href="fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -45,22 +45,19 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-collapse-3" style="font-size: 1em;">
                         <ul class="nav navbar-nav ">
+                          <li>
+                                <asp:LinkButton ID="lnkButtonHome" runat="server" OnClick="lnkButtonHome_Click"><span class="glyphicon glyphicon-home"></span> Home</asp:LinkButton></li>
                             <li>
-                                <asp:LinkButton ID="lnkButtonHome" runat="server" OnClick="lnkButtonHome_Click">Home</asp:LinkButton></li>
+                                <asp:LinkButton ID="lnkCatalog" runat="server" OnClick="lnkCatalog_Click"><span class="glyphicon glyphicon-list-alt"></span> Catalog</asp:LinkButton></li>
                             <li>
-                                <asp:LinkButton ID="lnkCatalog" runat="server" OnClick="lnkCatalog_Click">Catalog</asp:LinkButton></li>
-                            <li>
-                                <asp:LinkButton ID="lnkContactAbout" runat="server" OnClick="lnkContactAbout_Click">Contact/About</asp:LinkButton></li>
+                                <asp:LinkButton ID="lnkContactAbout" runat="server" OnClick="lnkContactAbout_Click"><span class="glyphicon glyphicon-info-sign"></span> Contact/About</asp:LinkButton></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="active">
-                                <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click">Login/Register</asp:LinkButton></li>
+                                <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click"><span class="glyphicon glyphicon-log-in"></span> Login/Register</asp:LinkButton></li>
                             <li>
-                                <asp:LinkButton ID="lnkCart" runat="server" OnClick="lnkCart_Click">Cart</asp:LinkButton></li>
-                            <li>
-                                <asp:LinkButton ID="lnkWishlist" runat="server" OnClick="lnkWishlist_Click">Wishlist</asp:LinkButton></li>
-
-                        </ul>
+                                <asp:LinkButton ID="lnkCart" runat="server" OnClick="lnkCart_Click"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</asp:LinkButton></li>
+                          </ul>
                     </div>
                     <!-- /.navbar-collapse -->
                 </div>
@@ -78,7 +75,7 @@
                         <asp:TextBox ID="tbLoggedIn" runat="server" CssClass="form-control text-center" EnableViewState="False" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
                         <asp:ValidationSummary ID="LoginValidationSummary" runat="server" ValidationGroup="Login" ForeColor="#CC0000" HeaderText="The following errors occured:" />
                     </div>
-                    <hr />
+                    <hr>
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
                             <label for="inputLoginUsername" class="col-sm-2 control-label">Username</label>
@@ -102,14 +99,14 @@
                         </div>
                     </div>
                     <hr />
-                    <h4 class="hidden-xs hidden-sm text-center">Don't have an account? Register for free! <span class="glyphicon glyphicon-chevron-right"></span></h4>
-                    <h4 class="hidden-lg hidden-md text-center">Don't have an account? Register for free! <span class="glyphicon glyphicon-chevron-down"></h4>
+                    <h4 class="hidden-xs hidden-sm hidden-md text-center">Don't have an account? Register for free! <span class="glyphicon glyphicon-chevron-right"></span></h4>
+                    <h4 class="hidden-lg  text-center">Don't have an account? Register for free! <span class="glyphicon glyphicon-chevron-down"></h4>
                 </div>
                 <div class="col-lg-6">
                     <h1 class="page-header text-center">Register</h1>
                     <div class="col-md-12">
                         <asp:ValidationSummary ID="ValidationSummaryRegister" runat="server" ValidationGroup="Register" ForeColor="#CC0000" HeaderText="The following errors occured:" />
-                        <asp:TextBox ID="tbHasUser" runat="server" class="form-control text-center" EnableViewState="False" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
+                        <asp:TextBox ID="tbHasUser" runat="server" CssClass="form-control text-center" EnableViewState="False" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
                     </div>
                     <hr />
                     <div class="form-horizontal" role="form">

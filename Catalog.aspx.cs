@@ -9,16 +9,19 @@ public partial class Catalog : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["New"] != null)
+        if (!this.IsPostBack)
         {
-            lnkLoginRegister.Text = "Logout";
-        }
-        else
-        {
-            lnkLoginRegister.Text = "Login/Register";
-            Response.Redirect("Login.aspx?err=1", false);
-            Context.ApplicationInstance.CompleteRequest();
+            if (Session["New"] != null)
+            {
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+            }
+            else
+            {
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
+                Response.Redirect("Login.aspx?err=1", false);
+                Context.ApplicationInstance.CompleteRequest();
 
+            }
         }
 
     }
@@ -36,13 +39,13 @@ public partial class Catalog : System.Web.UI.Page
     }
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
-        if (lnkLoginRegister.Text == "Login/Register")
+        if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register")
         {
             Response.Redirect("Login.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
 
         }
-        else if (lnkLoginRegister.Text == "Logout")
+        else if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-out\"></span> Logout")
         {
 
             Session["New"] = null;

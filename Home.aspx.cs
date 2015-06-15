@@ -9,67 +9,70 @@ public partial class Home : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["New"] != null)
+        if (!this.IsPostBack)
         {
-            lnkLoginRegister.Text = "Logout";
-        }
-        else
-        {
-            lnkLoginRegister.Text = "Login/Register";
+            if (Session["New"] != null)
+            {
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+            }
+            else
+            {
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
+            }
         }
     }
 
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Home.aspx",false);
+        Response.Redirect("Home.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
 
     }
     protected void lnkWishlist_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Wishlist.aspx",false);
+        Response.Redirect("Wishlist.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
 
     }
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
-        if (lnkLoginRegister.Text == "Login/Register")
+        if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register")
         {
-            Response.Redirect("Login.aspx",false);
+            Response.Redirect("Login.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
 
         }
-        else if (lnkLoginRegister.Text == "Logout")
+        else if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-out\"></span> Logout")
         {
-   
+
             Session["New"] = null;
-            Response.Redirect("Login.aspx",false);
+            Response.Redirect("Login.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
 
         }
     }
     protected void lnkContactAbout_Click(object sender, EventArgs e)
     {
-        Response.Redirect("ContactAbout.aspx",false);
+        Response.Redirect("ContactAbout.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
 
     }
     protected void lnkCart_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Cart.aspx",false);
+        Response.Redirect("Cart.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
 
     }
     protected void lnkCatalog_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Catalog.aspx",false);
+        Response.Redirect("Catalog.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
 
     }
 
     protected void lnkBrand_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Home.aspx",false);
+        Response.Redirect("Home.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
 
     }

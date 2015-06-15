@@ -11,8 +11,7 @@ public partial class Login : System.Web.UI.Page
     bool used = false;
     protected void Page_Load(object sender, EventArgs e)
     {
-        tbLoggedIn.Visible = false;
-        tbHasUser.Visible = false;
+      
         if (this.IsPostBack)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString);
@@ -27,16 +26,19 @@ public partial class Login : System.Web.UI.Page
             }
             conn.Close();
         }
-        else
+        else if(!this.IsPostBack)
         {
+            tbLoggedIn.Visible = false;
+            tbHasUser.Visible = false;
             tbHasUser.Text = "";
             if (Session["New"] != null)
             {
-                lnkLoginRegister.Text = "Logout";
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+
             }
             else
             {
-                lnkLoginRegister.Text = "Login/Register";
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
             }
             if (Request.QueryString["err"] != null)
             {
@@ -61,12 +63,12 @@ public partial class Login : System.Web.UI.Page
     }
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
-        if (lnkLoginRegister.Text == "Login/Register")
+        if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register")
         {
             Response.Redirect("Login.aspx",false);
             Context.ApplicationInstance.CompleteRequest();
         }
-        else if (lnkLoginRegister.Text == "Logout")
+        else if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-out\"></span> Logout")
         {
         
             Session["New"] = null;
@@ -130,7 +132,7 @@ public partial class Login : System.Web.UI.Page
             command.Parameters.AddWithValue("@facult", inputFaculty.Text);
             command.ExecuteNonQuery();
             tbHasUser.Visible = true;
-            tbHasUser.Text = "Registration was successful, welcome to BookExchange";
+            tbHasUser.Text = "Registration was successful, you can now login with your new account and welcome to BookExchange";
 
 
         }
@@ -163,7 +165,7 @@ public partial class Login : System.Web.UI.Page
             {
                Session["New"] = inputLoginUsername.Text;
                tbLoggedIn.Text="Login was successful";
-               lnkLoginRegister.Text = "Logout";
+               lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
                
             }
             else

@@ -9,13 +9,16 @@ public partial class ContactAbout : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["New"] != null)
+        if (!this.IsPostBack)
         {
-            lnkLoginRegister.Text = "Logout";
-        }
-        else
-        {
-            lnkLoginRegister.Text = "Login/Register";
+            if (Session["New"] != null)
+            {
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+            }
+            else
+            {
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
+            }
         }
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
@@ -32,13 +35,13 @@ public partial class ContactAbout : System.Web.UI.Page
     }
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
-        if (lnkLoginRegister.Text == "Login/Register")
+        if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register")
         {
             Response.Redirect("Login.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
 
         }
-        else if (lnkLoginRegister.Text == "Logout")
+        else if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-out\"></span> Logout")
         {
 
             Session["New"] = null;

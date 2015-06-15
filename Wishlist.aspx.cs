@@ -9,18 +9,20 @@ public partial class Wishlist : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["New"] != null)
+        if (!this.IsPostBack)
         {
-            lnkLoginRegister.Text = "Logout";
-        }
-        else
-        {
-            lnkLoginRegister.Text = "Login/Register";
-            Response.Redirect("Login.aspx?err=1",false);
-            Context.ApplicationInstance.CompleteRequest();
+            if (Session["New"] != null)
+            {
+                lnkLoginRegister.Text = "Logout";
+            }
+            else
+            {
+                lnkLoginRegister.Text = "Login/Register";
+                Response.Redirect("Login.aspx?err=1", false);
+                Context.ApplicationInstance.CompleteRequest();
 
+            }
         }
-
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
