@@ -51,6 +51,14 @@ public partial class Login : System.Web.UI.Page
         }
 
     }
+    protected void lnkSearch_Click(object sender, EventArgs e)
+    {
+        if (inputSearch.Text.Trim().Length != 0)
+        {
+            Response.Redirect("Catalog.aspx?name=" + inputSearch.Text, false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
+    }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
         Response.Redirect("Home.aspx", false);
@@ -176,7 +184,7 @@ public partial class Login : System.Web.UI.Page
                 Session["New"] = inputLoginUsername.Text;
                 tbLoggedIn.Text = "Login was successful";
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
-
+                Response.Redirect("Home.aspx");
             }
             else
             {

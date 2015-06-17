@@ -69,7 +69,14 @@ public partial class Home : System.Web.UI.Page
         Context.ApplicationInstance.CompleteRequest();
 
     }
-
+    protected void lnkSearch_Click(object sender, EventArgs e)
+    {
+        if (inputSearch.Text.Trim().Length != 0)
+        {
+            Response.Redirect("Catalog.aspx?name=" + inputSearch.Text, false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
+    }
     protected void lnkBrand_Click(object sender, EventArgs e)
     {
         Response.Redirect("Home.aspx", false);

@@ -1,7 +1,34 @@
+.navbar-brand { position: relative; z-index: 2; }
 
-@font-face {
-  font-family: "Bebas Neue";
-  src: url(./fonts/fonts/BebasNeue.otf) format("truetype");
+.navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; transition: transform 0.3s; }
+
+.navbar .navbar-collapse { position: relative; overflow: hidden !important; }
+.navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 0px; }
+
+.navbar .nav-collapse { position: absolute; z-index: 1; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding-right: 120px; padding-left: 80px; width: 100%; }
+.navbar.navbar-default .nav-collapse { background-color: #f8f8f8; }
+.navbar.navbar-inverse .nav-collapse { background-color: #222; }
+.navbar .nav-collapse .navbar-form { border-width: 0; box-shadow: none; }
+.nav-collapse>li { float: right; }
+
+.btn.btn-circle { border-radius: 50px; }
+.btn.btn-outline { background-color: transparent; }
+
+.navbar-nav.navbar-right .btn:not(.collapsed) {
+    background-color: rgb(111, 84, 153);
+    border-color: rgb(111, 84, 153);
+    color: rgb(255, 255, 255);
+}
+
+.navbar.navbar-default .nav-collapse,
+.navbar.navbar-inverse .nav-collapse {
+    height: auto !important;
+    transition: transform 0.3s;
+    transform: translate(0px,-50px);
+}
+.navbar.navbar-default .nav-collapse.in,
+.navbar.navbar-inverse .nav-collapse.in {
+    transform: translate(0px,0px);
 }
 
 @media screen and (max-width: 767px) {
@@ -29,6 +56,9 @@
         transform: translate(0px,0px);
     }
 }
+.dropdownz{
+  width: 100% !important;
+}
 body{
     text-transform: uppercase;
     font-family: "Bebas Neue", Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -45,4 +75,8 @@ hr.style-rainbow {
     background: -o-linear-gradient(-45deg, #ff0000 0%,#ffff00 25%,#00ff00 50%,#00ffff 75%,#0000ff 100%);
     background: -ms-linear-gradient(-45deg, #ff0000 0%,#ffff00 25%,#00ff00 50%,#00ffff 75%,#0000ff 100%);
     background: linear-gradient(-45deg, #ff0000 0%,#ffff00 25%,#00ff00 50%,#00ffff 75%,#0000ff 100%);
+}
+@font-face {
+  font-family: "Bebas Neue";
+  src: url(./fonts/fonts/BebasNeue.otf) format("truetype");
 }

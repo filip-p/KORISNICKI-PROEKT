@@ -8,7 +8,7 @@
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/CustomCss.css" rel="stylesheet">
+    <link href="css/test.css" rel="stylesheet">
     <link href="fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -50,12 +50,21 @@
                             <li class="active">
                                 <asp:LinkButton ID="lnkContactAbout" runat="server" OnClick="lnkContactAbout_Click"><span class="glyphicon glyphicon-info-sign"></span> Contact/About</asp:LinkButton></li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right" style="margin-right: 1em">
                             <li>
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click"><span class="glyphicon glyphicon-log-in"></span> Login/Register</asp:LinkButton></li>
-                            <li>
-                                <asp:LinkButton ID="lnkCart" runat="server" OnClick="lnkCart_Click"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</asp:LinkButton></li>
-                         </ul>
+                             <li>
+                                <asp:LinkButton runat="server" class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2">Search</asp:LinkButton>
+                            </li>
+                        </ul>
+                        <div class="collapse nav navbar-nav nav-collapse slide-down" id="nav-collapse2">
+                            <div class="navbar-form navbar-right" role="search">
+                                <div class="form-group">
+                                   <asp:TextBox ID="inputSearch" runat="server" class="form-control" placeholder="Search" ></asp:TextBox>
+                                </div>
+                                <asp:LinkButton  ID="lnkSearch" runat="server" type="submit" class="btn btn-danger" OnClick="lnkSearch_Click"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></asp:LinkButton>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.navbar-collapse -->
                 </div>

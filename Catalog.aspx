@@ -4,11 +4,11 @@
 <html>
 <head runat="server">
     <meta charset="UTF-8">
-    <%--<meta name="viewport" content="width=device-width, initial-scale=1">--%>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/CustomCss.css" rel="stylesheet">
+    <link href="css/test.css" rel="stylesheet">
     <link href="fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -23,13 +23,13 @@
 	        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 	        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	        <![endif]-->
-    <style type="text/css">
+ <%--   <style type="text/css">
         .auto-style1 {
             width: 100%;
         }
-    </style>
+    </style>--%>
 </head>
-<body style="padding-top: 3%; font-family: Montserrat;">
+<body style="padding-top: 3%;">
     <form id="form1" runat="server">
         <div class="container-fluid">
             <!-- Second navbar for search -->
@@ -57,12 +57,22 @@
                             <li>
                                 <asp:LinkButton ID="lnkContactAbout" runat="server" OnClick="lnkContactAbout_Click"><span class="glyphicon glyphicon-info-sign"></span> Contact/About</asp:LinkButton></li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right" style="margin-right: 1em">
                             <li>
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click"><span class="glyphicon glyphicon-log-in"></span> Login/Register</asp:LinkButton></li>
                             <li>
-                                <asp:LinkButton ID="lnkCart" runat="server" OnClick="lnkCart_Click"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</asp:LinkButton></li>
+                                <asp:LinkButton runat="server" class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2">Search</asp:LinkButton>
+                            </li>
                         </ul>
+                        <div class="collapse nav navbar-nav nav-collapse slide-down" id="nav-collapse2">
+                            <div class="navbar-form navbar-right" role="search">
+                                <div class="form-group">
+                                    <asp:TextBox ID="inputSearch" runat="server" class="form-control" placeholder="Search" ></asp:TextBox>
+                                   
+                                </div>
+                                <asp:LinkButton ID="lnkSearch" runat="server" type="submit" class="btn btn-danger" OnClick="lnkSearch_Click"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></asp:LinkButton>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.navbar-collapse -->
                 </div>
@@ -78,13 +88,17 @@
                     <h4 class="page-header text-center">Добредојдовте во каталогот на производи,
                          тука може да ги најдете книгите кои можете да ги купите/изнајмите,
                          или вие самите да одберете опција за додавање на книга за купување/
-                        изнајмување
+                        изнајмување.
                     </h4>
+                    <div>
+                        <asp:LinkButton ID="AddBook" runat="server" CssClass="btn btn-info" OnClick="AddBook_Click"><span class="glyphicon glyphicon-plus-sign"></span> Add Book</asp:LinkButton>
+                    </div>
+                    <br />
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <asp:Table ID="bookShowTable" CssClass="table table-hover table-bordered table-stripped table-responsive"  style="text-transform:none;" runat="server"></asp:Table>
+                    <asp:Table ID="bookShowTable" CssClass="table table-hover table-responsive table-bordered" Style="text-transform: none;" runat="server"></asp:Table>
                     <asp:TextBox ID="tbError" runat="server"></asp:TextBox>
                 </div>
             </div>

@@ -50,6 +50,14 @@ public partial class ContactAbout : System.Web.UI.Page
 
         }
     }
+    protected void lnkSearch_Click(object sender, EventArgs e)
+    {
+        if (inputSearch.Text.Trim().Length != 0)
+        {
+            Response.Redirect("Catalog.aspx?name=" + inputSearch.Text, false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
+    }
     protected void lnkContactAbout_Click(object sender, EventArgs e)
     {
         Response.Redirect("ContactAbout.aspx", false);
