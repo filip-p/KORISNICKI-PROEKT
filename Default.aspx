@@ -32,6 +32,35 @@
                 <br />
                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
             </div>
+
+
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                     <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                    <asp:FileUpload ID="FileUpload1" runat="server" />
+
+
+                    <br />
+                    <br />
+                    <br />
+                    <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+
+                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <asp:GridView ID="GridView2" CssClass="table table-hover" runat="server" AutoGenerateColumns="True">
+                    </asp:GridView>
+                  
+                </div>
+            </div>
+            
         </div>
 
 

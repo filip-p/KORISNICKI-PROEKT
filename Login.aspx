@@ -45,7 +45,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-collapse-3" style="font-size: 1em;">
                         <ul class="nav navbar-nav ">
-                          <li>
+                            <li>
                                 <asp:LinkButton ID="lnkButtonHome" runat="server" OnClick="lnkButtonHome_Click"><span class="glyphicon glyphicon-home"></span> Home</asp:LinkButton></li>
                             <li>
                                 <asp:LinkButton ID="lnkCatalog" runat="server" OnClick="lnkCatalog_Click"><span class="glyphicon glyphicon-list-alt"></span> Catalog</asp:LinkButton></li>
@@ -57,7 +57,7 @@
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click"><span class="glyphicon glyphicon-log-in"></span> Login/Register</asp:LinkButton></li>
                             <li>
                                 <asp:LinkButton ID="lnkCart" runat="server" OnClick="lnkCart_Click"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</asp:LinkButton></li>
-                          </ul>
+                        </ul>
                     </div>
                     <!-- /.navbar-collapse -->
                 </div>
@@ -100,7 +100,7 @@
                     </div>
                     <hr />
                     <h4 class="hidden-xs hidden-sm hidden-md text-center">Don't have an account? Register for free! <span class="glyphicon glyphicon-chevron-right"></span></h4>
-                    <h4 class="hidden-lg  text-center">Don't have an account? Register for free! <span class="glyphicon glyphicon-chevron-down"></h4>
+                    <h4 class="hidden-lg  text-center">Don't have an account? Register for free! <span class="glyphicon glyphicon-chevron-down"></span></h4>
                 </div>
                 <div class="col-lg-6">
                     <h1 class="page-header text-center">Register</h1>

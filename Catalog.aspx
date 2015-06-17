@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%--<meta name="viewport" content="width=device-width, initial-scale=1">--%>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -23,6 +23,11 @@
 	        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 	        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	        <![endif]-->
+    <style type="text/css">
+        .auto-style1 {
+            width: 100%;
+        }
+    </style>
 </head>
 <body style="padding-top: 3%; font-family: Montserrat;">
     <form id="form1" runat="server">
@@ -79,7 +84,8 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-
+                    <asp:Table ID="bookShowTable" CssClass="table table-hover table-bordered table-stripped table-responsive"  style="text-transform:none;" runat="server"></asp:Table>
+                    <asp:TextBox ID="tbError" runat="server"></asp:TextBox>
                 </div>
             </div>
         </div>

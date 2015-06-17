@@ -11,7 +11,7 @@ public partial class Login : System.Web.UI.Page
     bool used = false;
     protected void Page_Load(object sender, EventArgs e)
     {
-      
+
         if (this.IsPostBack)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString);
@@ -19,14 +19,15 @@ public partial class Login : System.Web.UI.Page
             string checkuser = "SELECT count(*) FROM UserData WHERE username='" + inputUsername.Text + "'";
             SqlCommand command = new SqlCommand(checkuser, conn);
             int temp = Convert.ToInt32(command.ExecuteScalar().ToString());
-            if (temp > 0)          {
+            if (temp > 0)
+            {
                 tbHasUser.Visible = true;
                 tbHasUser.Text = "That Username already exists, please select a new one.";
                 used = true;
             }
             conn.Close();
         }
-        else if(!this.IsPostBack)
+        else if (!this.IsPostBack)
         {
             tbLoggedIn.Visible = false;
             tbHasUser.Visible = false;
@@ -46,9 +47,9 @@ public partial class Login : System.Web.UI.Page
                 tbLoggedIn.Visible = true;
 
             }
-        
+
         }
-     
+
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
@@ -57,7 +58,7 @@ public partial class Login : System.Web.UI.Page
     }
     protected void lnkWishlist_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Wishlist.aspx",false);
+        Response.Redirect("Wishlist.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
 
     }
@@ -65,37 +66,37 @@ public partial class Login : System.Web.UI.Page
     {
         if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register")
         {
-            Response.Redirect("Login.aspx",false);
+            Response.Redirect("Login.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
         }
         else if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-out\"></span> Logout")
         {
-        
+
             Session["New"] = null;
-            Response.Redirect("Login.aspx",false);
+            Response.Redirect("Login.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
 
         }
     }
     protected void lnkContactAbout_Click(object sender, EventArgs e)
     {
-        Response.Redirect("ContactAbout.aspx",false);
+        Response.Redirect("ContactAbout.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
     protected void lnkCart_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Cart.aspx",false);
+        Response.Redirect("Cart.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
     protected void lnkCatalog_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Catalog.aspx",false);
+        Response.Redirect("Catalog.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
 
     protected void lnkBrand_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Home.aspx",false);
+        Response.Redirect("Home.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
 
@@ -115,7 +116,7 @@ public partial class Login : System.Web.UI.Page
         }
         used = false;
     }
-  
+
     protected void registering()
     {
         SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString);
@@ -133,8 +134,17 @@ public partial class Login : System.Web.UI.Page
             command.ExecuteNonQuery();
             tbHasUser.Visible = true;
             tbHasUser.Text = "Registration was successful, you can now login with your new account and welcome to BookExchange";
+           Application.Lock();
+           if (Application["brojKorisnici"] == null)
+           {
+               Application["brojKorisnici"] = 1;
+           }
+           else
+           {
+               Application["brojKorisnici"] = (int)Application["brojKorisnici"] + 1;
+           }
 
-
+                Application.UnLock();
         }
         catch (Exception e)
         {
@@ -160,13 +170,13 @@ public partial class Login : System.Web.UI.Page
             conn.Open();
             string checkPasswordQuery = "SELECT password FROM UserData where username='" + inputLoginUsername.Text + "'";
             SqlCommand passComm = new SqlCommand(checkPasswordQuery, conn);
-            string password = passComm.ExecuteScalar().ToString().Replace(" ","");
+            string password = passComm.ExecuteScalar().ToString().Replace(" ", "");
             if (password == inputLoginPassword.Text)
             {
-               Session["New"] = inputLoginUsername.Text;
-               tbLoggedIn.Text="Login was successful";
-               lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
-               
+                Session["New"] = inputLoginUsername.Text;
+                tbLoggedIn.Text = "Login was successful";
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+
             }
             else
             {
