@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 public partial class Catalog : System.Web.UI.Page
 {
     int j = 0;
+    string id = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!this.IsPostBack)
@@ -18,10 +19,16 @@ public partial class Catalog : System.Web.UI.Page
             if (Session["New"] != null)
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                lbUser.Text = (string)Session["New"];
+                lbUser.Visible = true;
+                lblTime.Visible = true;
+                lblTime.Text = DateTime.Now.ToString();
             }
             else
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
+          
+                footerLbl.Visible = false;
                 Response.Redirect("Login.aspx?err=1", false);
                 Context.ApplicationInstance.CompleteRequest();
 
@@ -31,7 +38,7 @@ public partial class Catalog : System.Web.UI.Page
             else
                 prikaziStavki((string)Request.QueryString["name"]);
 
-
+            lblYear.Text = DateTime.Now.Year.ToString();
         }
         if (this.IsPostBack)
         {
@@ -96,15 +103,11 @@ public partial class Catalog : System.Web.UI.Page
             j = 0;
             while (reader.Read())
             {
-                //   if (!reader["BookSellerUser"].ToString().Equals(Session["New"].ToString()))
-
                 j++;
                 TableRow tr = new TableRow();
                 TableCell td = new TableCell();
                 Label spanBookName = new Label();
-                // spanBookName.CssClass = "text-center";
                 spanBookName.Text = reader["BookName"].ToString();
-                //     td.Text = "<div class=\"row\"><h4>" + reader["BookName"].ToString() + "</h4></div>";
                 byte[] picData = (byte[])reader["BookImage"];
                 string imageBase64 = Convert.ToBase64String(picData);
                 string imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
@@ -128,8 +131,8 @@ public partial class Catalog : System.Web.UI.Page
                 TableCell td3 = new TableCell();
                 string exchange = reader["BookNeededForExchange"].ToString();
                 td3.Text = "<h4>" + reader["BookSellerUser"].ToString() + "</h4>" +
-                    "<h4>Price = " + reader["BookPrice"].ToString() + "</h4><hr /><h4>Tradeable for:</h4><h4>" + exchange + "</h4>";
-                //  td3.CssClass = "col-sm-3";
+                    "<h4>Price = " + reader["BookPrice"].ToString() + "</h4><hr /><p>Tradeable for:</p><p>" + exchange + "</p>";
+                td3.CssClass = "col-sm-3";
                 tr.Cells.Add(td3);
 
                 TableCell td4 = new TableCell();
@@ -139,28 +142,26 @@ public partial class Catalog : System.Web.UI.Page
                 btn.CommandArgument = reader["Id"].ToString();
                 btn.CssClass = "btn btn-success btn-block";
                 btn.Text = "<span class=\"fa fa-usd\"></span> Buy";
-
-
-                //    td4.Text += "<br />";
+                btn.Attributes.Add("data-toggle", "modal");
+                btn.Attributes.Add("data-target", "#myModal");
+                
                 LinkButton btn2 = new LinkButton();
                 btn2.ID = "btnExchange" + j;
-                btn2.Command += new CommandEventHandler(this.btn_Command);
+                btn2.Command += new CommandEventHandler(this.btn_Command2);
                 btn2.CommandArgument = reader["Id"].ToString();
                 btn2.CssClass = "btn btn-info btn-block";
                 btn2.Text = "<span class=\"glyphicon glyphicon-transfer\"></span> Exchange";
-
-
 
                 DropDownList ddl = new DropDownList();
 
                 td4.Controls.Add(btn);
                 td4.Controls.Add(btn2);
-                if (!reader["BookSellerUser"].ToString().Equals(Session["New"].ToString()))
+                if (reader["BookSellerUser"].ToString().Equals(Session["New"].ToString()))
                 {
                     btn.CssClass += " disabled";
                     btn2.CssClass += " disabled";
                     Label cantBuyLabel = new Label();
-                    cantBuyLabel.Text = "You can't buy this book because you are it's seller";
+                    cantBuyLabel.Text = "You can't buy or exchange this book because you are it's seller";
                     td4.Controls.Add(cantBuyLabel);
                 }
                 else
@@ -171,12 +172,9 @@ public partial class Catalog : System.Web.UI.Page
                     ddl.CssClass = "dropdownz";
                     td4.Controls.Add(ddl);
                 }
-              
-                //td4.Text = "<asp:Button runat=\"server\" id=\"btn" + j + "\" class=\"btn btn-danger\" CommandName=\"addItemToCart\" CommandArgument=\"" + reader["Id"].ToString() + "\" OnCommand=\"btn_Click\"><span class=\"glyphicon glyphicon-shopping-cart\"></span></asp:Button>";
-                //    td4.CssClass = "col-sm-2";
+                td4.CssClass = "col-sm-2";
                 tr.Cells.Add(td4);
-                //TODO podeli gi so split za Tradeable, i da se naprai formata za 
-                //dodavanje na novi itemi.
+           
                 bookShowTable.Rows.Add(tr);
             }
 
@@ -200,9 +198,37 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
+    private void btn_Command2(object sender, CommandEventArgs e)
+    {
+        id = e.CommandArgument.ToString();
+    }
+
     private void btn_Command(object sender, CommandEventArgs e)
     {
-        tbError.Text = e.CommandArgument.ToString();
+        string bookName;
+        string bookPrice;
+        SqlConnection connection = new SqlConnection();
+        connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
+        SqlCommand command = new SqlCommand();
+        command.Connection = connection;
+        command.CommandText = "Select BookName, BookPrice from BookData where Id='" + e.CommandArgument.ToString() +"'";
+        try
+        {
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            bookName = reader["BookName"].ToString();
+            bookPrice = reader["BookPrice"].ToString();
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "!confirm('Are you sure you want to buy " +bookName +" for "+bookPrice +"');", true);
+
+        }
+        catch (Exception err)
+        {
+
+        }
+        finally
+        {
+            connection.Close();
+        }
     }
 
     protected void lnkButtonHome_Click(object sender, EventArgs e)
@@ -270,6 +296,7 @@ public partial class Catalog : System.Web.UI.Page
 
     protected void AddBook_Click(object sender, EventArgs e)
     {
-        Response.Redirect("AddBook.aspx");
+        Response.Redirect("AddBook.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
     }
 }

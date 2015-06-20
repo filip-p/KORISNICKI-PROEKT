@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,13 +15,24 @@ public partial class Home : System.Web.UI.Page
             if (Session["New"] != null)
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                lbUser.Text = (string)Session["New"];
+                lbUser.Visible = true;
+                lblTime.Visible = true;
+                lblTime.Text = DateTime.Now.ToString();
             }
             else
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
+                lbUser.Visible = false;
+                lblTime.Visible = false;
+                footerLbl.Visible = false;
             }
+            lblYear.Text = DateTime.Now.Year.ToString();
+            
         }
     }
+
+   
 
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {

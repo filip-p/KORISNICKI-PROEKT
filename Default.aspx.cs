@@ -20,8 +20,12 @@ public partial class _Default : System.Web.UI.Page
             BindGridData();
 
         }
-
-
+        if (Application["brojKorisnici"] != null)
+            TextBox1.Text = (string)Application["brojKorisnici"];
+        if (Application["brojNaKnigi"] != null)
+        {
+            TextBox2.Text = (string)Application["brojNaKnigi"];
+        }
     }
     protected void ispolniMaster()
     {

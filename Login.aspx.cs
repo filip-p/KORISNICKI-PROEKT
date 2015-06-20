@@ -35,19 +35,25 @@ public partial class Login : System.Web.UI.Page
             if (Session["New"] != null)
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
-
+                lbUser.Text = (string)Session["New"];
+                lbUser.Visible = true;
+                lblTime.Visible = true;
+                lblTime.Text = DateTime.Now.ToString();
             }
             else
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
+                lbUser.Visible = false;
+                lblTime.Visible = false;
+                footerLbl.Visible = false;
             }
             if (Request.QueryString["err"] != null)
             {
-                tbLoggedIn.Text = "You have to be Logged in to view the Catalog, your Cart and your Wishlist!";
+                tbLoggedIn.Text = "You need to be Logged in to view the Catalog!";
                 tbLoggedIn.Visible = true;
 
             }
-
+            lblYear.Text = DateTime.Now.Year.ToString();
         }
 
     }
@@ -149,7 +155,7 @@ public partial class Login : System.Web.UI.Page
            }
            else
            {
-               Application["brojKorisnici"] = (int)Application["brojKorisnici"] + 1;
+               Application["brojKorisnici"] = ((int)Application["brojKorisnici"]) + 1;
            }
 
                 Application.UnLock();

@@ -1,10 +1,12 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Home.aspx.cs" Inherits="Home" %>
 
 <!DOCTYPE html>
-<html style="background-color: black;">
+<html>
 <head runat="server">
     <meta charset="UTF-8">
-    <%--<meta name="viewport" content="width=device-width, initial-scale=1">--%>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -22,10 +24,9 @@
 	        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	        <![endif]-->
 </head>
-<body style="padding-top: 3%; font-family: Montserrat;">
+<body>
     <form id="form1" runat="server">
         <div class="container-fluid">
-            <!-- Second navbar for search -->
             <nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -36,14 +37,14 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <asp:LinkButton ID="lnkBrand" runat="server" OnClick="lnkBrand_Click" Style="margin-top: -0.5em" class="navbar-brand"><img src="http://placehold.it/100x40">
+                        <asp:LinkButton ID="lnkBrand" runat="server" OnClick="lnkBrand_Click" Style="margin-top: -0.5em" class="navbar-brand"><asp:Image runat="server" AlternateText="Book Exchange Logo" ImageUrl="img/logo.jpg" class="img-responsive"></asp:Image>
                         </asp:LinkButton>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-collapse-3" style="font-size: 1em;">
                         <ul class="nav navbar-nav ">
-                           <li class="active">
+                            <li class="active">
                                 <asp:LinkButton ID="lnkButtonHome" runat="server" OnClick="lnkButtonHome_Click"><span class="glyphicon glyphicon-home"></span> Home</asp:LinkButton></li>
                             <li>
                                 <asp:LinkButton ID="lnkCatalog" runat="server" OnClick="lnkCatalog_Click"><span class="glyphicon glyphicon-list-alt"></span> Catalog</asp:LinkButton></li>
@@ -60,9 +61,9 @@
                         <div class="collapse nav navbar-nav nav-collapse slide-down" id="nav-collapse2">
                             <div class="navbar-form navbar-right" role="search">
                                 <div class="form-group">
-                                    <asp:TextBox ID="inputSearch" runat="server" class="form-control" placeholder="Search" ></asp:TextBox>
+                                    <asp:TextBox ID="inputSearch" runat="server" class="form-control" placeholder="Search"></asp:TextBox>
                                 </div>
-                                <asp:LinkButton  ID="lnkSearch" runat="server" type="submit" class="btn btn-danger" OnClick="lnkSearch_Click"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></asp:LinkButton>
+                                <asp:LinkButton ID="lnkSearch" runat="server" type="submit" class="btn btn-danger" OnClick="lnkSearch_Click"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></asp:LinkButton>
                             </div>
                         </div>
                     </div>
@@ -74,194 +75,155 @@
 
         </div>
         <!-- /.container-fluid -->
-
-        <div class="container-fluid" style="background-color: #577492;">
+        <%--rgba(111,175,11,0.7);--%>
+        <div class="container-fluid" style="background-color: #fff; padding-top: 50px">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <h1 style="color: #fff; font-size: 4em;">Book Exchange</h1>
+                    <h1 style="font-size: 3em;" class="visible-lg visible-md">Book Exchange</h1>
+                    <h1 class="visible-sm visible-xs">Book Exchange</h1>
+                    <h3 class="visible-md visible-lg">A place where exchanging books with fellow students comes natural</h3>
+                    <h5 class="visible-xs visible-sm">A place where exchanging books with fellow students comes natural</h5>
                 </div>
             </div>
         </div>
-     <%--   <div class="container" style="width: 25em; height: 25em; border-radius: 50%; font-size: 1.3em; color: #fff; background: #fff; position:relative; z-index: 2;">
-            <div class="row">
-                <div class=" col-sm-12 text-center">
-                    <img src="img/bookCover.png" class="img-responsive">
-                </div>
-            </div>
-        </div>--%>
-        <div class="container-fluid" style="background-color: #18bc9c;">
+
+        <%--18bc9c--%>
+        <div class="container-fluid" style="background-color: #fff;">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="container text-center" style="padding-top:1em">
-                        <div id="main_area">
-                            <!-- Slider -->
+                    <section id="carousel">
+                        <div class="container">
                             <div class="row">
-                                <div class="col-xs-12" id="slider">
-                                    <!-- Top part of the slider -->
-                                    <div class="row">
-                                        <div class="col-sm-8" id="carousel-bounding-box">
-                                            <div class="carousel slide" id="myCarousel">
-                                                <!-- Carousel items -->
-                                                <div class="carousel-inner">
-                                                    <div class="active item" data-slide-number="0">
-                                                        <img src="img/HomeImg.jpg" style="width: 770px; height: 450px">
-                                                    </div>
-
-                                                    <div class="item" data-slide-number="1">
-                                                        <img src="http://placehold.it/770x300&text=two">
-                                                    </div>
-
-                                                    <div class="item" data-slide-number="2">
-                                                        <img src="http://placehold.it/770x300&text=three">
-                                                    </div>
-
-                                                    <div class="item" data-slide-number="3">
-                                                        <img src="http://placehold.it/770x300&text=four">
-                                                    </div>
-
-                                                    <div class="item" data-slide-number="4">
-                                                        <img src="http://placehold.it/770x300&text=five">
-                                                    </div>
-
-                                                    <div class="item" data-slide-number="5">
-                                                        <img src="http://placehold.it/770x300&text=six">
-                                                    </div>
-                                                </div>
-                                                <!-- Carousel nav -->
-                                                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                                </a>
-                                                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                                </a>
+                                <div class="col-md-8 col-md-offset-2">
+                                    <div class="quote"><i class="fa fa-quote-left fa-4x"></i></div>
+                                    <div class="carousel slide" id="fade-quote-carousel" data-ride="carousel" data-interval="5000">
+                                        <!-- Carousel indicators -->
+                                        <ol class="carousel-indicators">
+                                            <li data-target="#fade-quote-carousel" data-slide-to="0" class="active"></li>
+                                            <li data-target="#fade-quote-carousel" data-slide-to="1"></li>
+                                            <li data-target="#fade-quote-carousel" data-slide-to="2"></li>
+                                        </ol>
+                                        <!-- Carousel items -->
+                                        <div class="carousel-inner">
+                                            <div class="active item">
+                                                <blockquote>
+                                                    <p class="visible-md visible-lg visible-sm text-justify">After i found this website, i didn't even need to keep looking for anything else because Book Exchange literally has all of the things i need to make successful book exchanges with other colleague, and all the deals are made in no time at all!</p>
+                                                    <p class="visible-xs" style="font-size: small">After i found this website, i didn't even need to keep looking for anything else because Book Exchange literally has all of the things i need to make successful book exchanges with other colleague, and all the deals are made in no time at all!</p>
+                                                </blockquote>
+                                                <asp:Image runat="server" ImageUrl="img/homePage/carouselStef.jpg" CssClass="img-responsive profile-circle" />
                                             </div>
-                                        </div>
-
-                                        <div class="col-sm-4" id="carousel-text"></div>
-
-                                        <div id="slide-content" style="display: none;">
-                                            <div id="slide-content-0">
-                                                <h2>Slider One</h2>
-                                                <p>Lorem Ipsum Dolor</p>
-                                                <p class="sub-text">October 24 2014 - <a href="#">Read more</a></p>
+                                            <div class="item">
+                                                <blockquote>
+                                                    <p class="visible-md visible-lg visible-sm text-justify">It's funny when u want something really bad, but when u give up on looking for it, it comes by it self. The same thing happened with Book Exchange. When i finally stopped looking for a book exchange site --> BAAM!. I found this, it's really amazing, i can't say anithing bad about this site. Pure Awesome!!!!</p>
+                                                    <p class="visible-xs" style="font-size: small">It's funny when u want something really bad, but when u give up on looking for it, it comes by it self. The same thing happened with Book Exchange. When i finally stopped looking for a book exchange site --> BAAM!. I found this, it's really amazing, i can't say anithing bad about this site. Pure Awesome!!!!</p>
+                                                </blockquote>
+                                                <asp:Image runat="server" ImageUrl="img/homePage/carouselDare.jpg" class="img-responsive profile-circle" />
                                             </div>
+                                            <div class="item">
+                                                <blockquote>
+                                                    <p class="visible-md visible-lg visible-sm">Takaaa! That's what i said in my language when i first found this site. So easy to navigate, but i can guess it's really complex on the inside. This site is a HIT!</p>
+                                                    <p class="visible-xs" style="font-size: small">Takaaa! That's what i said in my language when i first found this site. So easy to navigate, but i can guess it's really complex on the inside. This site is a HIT!</p>
+                                                </blockquote>
+                                                <asp:Image runat="server" ImageUrl="img/homePage/carouselPance.jpg" class="img-responsive profile-circle" />
 
-                                            <div id="slide-content-1">
-                                                <h2>Slider Two</h2>
-                                                <p>Lorem Ipsum Dolor</p>
-                                                <p class="sub-text">October 24 2014 - <a href="#">Read more</a></p>
-                                            </div>
-
-                                            <div id="slide-content-2">
-                                                <h2>Slider Three</h2>
-                                                <p>Lorem Ipsum Dolor</p>
-                                                <p class="sub-text">October 24 2014 - <a href="#">Read more</a></p>
-                                            </div>
-
-                                            <div id="slide-content-3">
-                                                <h2>Slider Four</h2>
-                                                <p>Lorem Ipsum Dolor</p>
-                                                <p class="sub-text">October 24 2014 - <a href="#">Read more</a></p>
-                                            </div>
-
-                                            <div id="slide-content-4">
-                                                <h2>Slider Five</h2>
-                                                <p>Lorem Ipsum Dolor</p>
-                                                <p class="sub-text">October 24 2014 - <a href="#">Read more</a></p>
-                                            </div>
-
-                                            <div id="slide-content-5">
-                                                <h2>Slider Six</h2>
-                                                <p>Lorem Ipsum Dolor</p>
-                                                <p class="sub-text">October 24 2014 - <a href="#">Read more</a></p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--/Slider-->
-
-                            <div class="row hidden-xs" id="slider-thumbs">
-                                <!-- Bottom switcher of slider -->
-                                <ul class="hide-bullets">
-                                    <li class="col-sm-2">
-                                        <a class="thumbnail" id="carousel-selector-0">
-                                            <img src="http://placehold.it/170x100&text=one"></a>
-                                    </li>
-
-                                    <li class="col-sm-2">
-                                        <a class="thumbnail" id="carousel-selector-1">
-                                            <img src="http://placehold.it/170x100&text=two"></a>
-                                    </li>
-
-                                    <li class="col-sm-2">
-                                        <a class="thumbnail" id="carousel-selector-2">
-                                            <img src="http://placehold.it/170x100&text=three"></a>
-                                    </li>
-
-                                    <li class="col-sm-2">
-                                        <a class="thumbnail" id="carousel-selector-3">
-                                            <img src="http://placehold.it/170x100&text=four"></a>
-                                    </li>
-
-                                    <li class="col-sm-2">
-                                        <a class="thumbnail" id="carousel-selector-4">
-                                            <img src="http://placehold.it/170x100&text=five"></a>
-                                    </li>
-
-                                    <li class="col-sm-2">
-                                        <a class="thumbnail" id="carousel-selector-5">
-                                            <img src="http://placehold.it/170x100&text=six"></a>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
-            <!----</h1> -->
         </div>
-        <div class="container-fluid" style="background-color: #977492; margin-bottom: -15em">
+
+        <div class="container-fluid text-center" style="color: #fff; background-color: #577492; padding-top: 2%; padding-bottom: 2%">
             <div class="row">
-                <div class="col-md-12 text-center">
-                    <h1 style="color: #fff; font-size: 74px;">Book Exchange</h1>
+                <h1 style="color: #fff">Benefits of using Book Exchange</h1>
+                <div class="col-lg-4 col-md-4">
+                    <asp:Image runat="server" src="img/homePage/timer.svg" Width="200px" CssClass="hidden-xs hidden-sm" />
+                    <asp:Image runat="server" src="img/homePage/timer.svg" Width="100px" CssClass="hidden-md hidden-lg" />
+                    <h3>Get the books you need Quickly!</h3>
+                    <p>With Book Exchange, finding the books you need for your studies is really fast.</p>
+                </div>
+                <hr class="visible-sm visible-xs" />
+                <div class="col-lg-4 col-md-4">
+                    <asp:Image runat="server" src="img/homePage/coffeeCup.png" Width="205px" CssClass="hidden-xs hidden-sm" />
+                    <asp:Image runat="server" src="img/homePage/coffeeCup.png" Width="105px" CssClass="hidden-md hidden-lg" />
+                    <h3>No setting up required!</h3>
+                    <p>With Book Exchange, all you need to do is make an account, everything else is covered by US!</p>
+                </div>
+                <hr class="visible-sm visible-xs" />
+                <div class="col-lg-4 col-md-4">
+                    <asp:Image src="img/homePage/cookingGlove.png" runat="server" Width="195px" Height="205px" CssClass="hidden-xs hidden-sm" />
+                    <asp:Image src="img/homePage/cookingGlove.png" runat="server" Width="100px" Height="120px" CssClass="hidden-md hidden-lg" />
+                    <h3>Safety First!</h3>
+                    <p>We guarantee that everything you browse on Book Exchange, as well as all of your transactions will be 100% secure!</p>
                 </div>
             </div>
         </div>
+        <div class=" oldBookImage container-fluid text-center visible-lg visible-md visible-sm" style="padding-bottom: 35%;">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <h1 class="text-center !important" style="color: darkslategrey;">Want to be part of our Timeline? Sign up now!</h1>
+            <asp:LinkButton CssClass="btn btn-warning btn-lg" Style="color: darkslategrey;" PostBackUrl="~/Login.aspx" Text="Sign Up / Login" runat="server"></asp:LinkButton>
+            <h1 class="text-center !important" style="color: darkslategrey;">Already part of our Timeline? Start exchanging now !</h1>
+            <asp:LinkButton CssClass="btn btn-danger btn-lg" Style="color: darkslategrey;" PostBackUrl="~/Catalog.aspx" Text="Exchange!" runat="server"></asp:LinkButton>
+        </div>
+        <div class=" oldBookImage container-fluid text-center visible-xs" style="margin-top: auto; padding-bottom: 30%">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <h5 class="text-center !important" style="color: darkslategrey;">Want to be part of our Timeline? Sign up now!</h5>
+            <asp:LinkButton CssClass="btn btn-warning btn-xs " Style="color: darkslategrey;" PostBackUrl="~/Login.aspx" Text="Sign Up / Login" runat="server"></asp:LinkButton>
+            <h5 class="text-center !important" style="color: darkslategrey;">Already part of our Timeline? Start exchanging now !</h5>
+            <asp:LinkButton CssClass="btn btn-danger btn-xs" Style="color: darkslategrey;" PostBackUrl="~/Catalog.aspx" Text="Exchange!" runat="server"></asp:LinkButton>
+        </div>
+        <footer class="footer text-center" style="padding-bottom: 10%;">
+            <hr />
+            <div class="col-md-5">
+                <div>
+                    <ul class="social-network social-circle foot">
+                        <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
+                        <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
+                        - 
+                        <i class="icon-calendar"></i>
+                        <asp:Label ID="lblTime" runat="server"></asp:Label>
+                    </asp:Label>
+                </div>
+            </div>
+            <hr class="visible-xs visible-sm" />
+            <div class="col-md-4 ">
+                <h5 class="">Join our Mailing List for special offers, discounts and updates.</h5>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="E-mail address">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Join!</button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+
+            </div>
+            <hr class="visible-xs visible-sm" />
+            <div class="col-md-3">
+                Copyright &copy; Book Exchange
+                    <asp:Label ID="lblYear" runat="server"></asp:Label>
+            </div>
+
+        </footer>
 
 
-
-        <!-- jQuery -->
-        <script src="js/jquery.js"></script>
 
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap.js"></script>
-
-        <script>
-            $(document).ready(function ($) {
-
-                $('#myCarousel').carousel({
-                    interval: 5000
-                });
-
-                $('#carousel-text').html($('#slide-content-0').html());
-
-                //Handles the carousel thumbnails
-                $('[id^=carousel-selector-]').click(function () {
-                    var id = this.id.substr(this.id.lastIndexOf("-") + 1);
-                    var id = parseInt(id);
-                    $('#myCarousel').carousel(id);
-                });
-
-
-                // When the carousel slides, auto update the text
-                $('#myCarousel').on('slid.bs.carousel', function (e) {
-                    var id = $('.item.active').data('slide-number');
-                    $('#carousel-text').html($('#slide-content-' + id).html());
-                });
-            });
-        </script>
     </form>
 </body>
 </html>

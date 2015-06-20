@@ -12,16 +12,27 @@ public partial class AddBook : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        
         if (!this.IsPostBack)
         {
             if (Session["New"] != null)
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                lbUser.Text = (string)Session["New"];
+                lbUser.Visible = true;
+                lblTime.Visible = true;
+                lblTime.Text = DateTime.Now.ToString();
             }
             else
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
+                lbUser.Visible = false;
+                lblTime.Visible = false;
+                footerLbl.Visible = false;
             }
+            booksNumber.Value = getNumberOfItems("BookData").ToString();
+            usersNumber.Value = getNumberOfItems("UserData").ToString();
+            lblYear.Text = DateTime.Now.Year.ToString();
         }
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
@@ -76,6 +87,29 @@ public partial class AddBook : System.Web.UI.Page
         Context.ApplicationInstance.CompleteRequest();
 
     }
+    public int getNumberOfItems(string table_name)
+    {
+        int number = 0;
+        SqlConnection connection = new SqlConnection();
+        connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT COUNT(*) FROM " + table_name;
+        try
+        {
+            connection.Open();
+            number = (int)cmd.ExecuteScalar();
+        }
+        catch (Exception err)
+        {
+
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return number;
+    }
     protected void submitBook_Click(object sender, EventArgs e)
     {
         byte[] imgbyte;
@@ -109,21 +143,7 @@ public partial class AddBook : System.Web.UI.Page
                 cmd.Parameters.Add("@bimg", SqlDbType.Image).Value = imgbyte;
                 cmd.Parameters.AddWithValue("@bnfe", inputBookNeeded.Text);
 
-                int count = cmd.ExecuteNonQuery();
-                if (count == 1)
-                {
-                    Application.Lock();
-                    if (Application["brojNaKnigi"] == null)
-                    {
-                        Application["brojNaKnigi"] = 1;
-                    }
-                    else
-                    {
-                        Application["brojNaKnigi"] = (int)Application["brojNaKnigi"] + 1;
-                    }
-                    Application.UnLock();
-                 
-                }
+                cmd.ExecuteNonQuery();
             }
             catch (Exception err)
             {
