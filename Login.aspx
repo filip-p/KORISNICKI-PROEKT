@@ -5,6 +5,8 @@
 <head runat="server">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link runat="server" rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/favicon.ico" type="image/ico" />
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -26,7 +28,7 @@
 	        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	        <![endif]-->
 </head>
-<body style="padding-bottom:3%;">
+<body style="padding-bottom: 3%;">
     <form id="form1" runat="server">
         <div class="container-fluid">
             <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -39,7 +41,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <asp:LinkButton ID="lnkBrand" runat="server" OnClick="lnkBrand_Click" Style="margin-top: -0.5em" class="navbar-brand"><asp:Image runat="server" AlternateText="Book Exchange Logo" ImageUrl="img/logo.jpg" class="img-responsive"></asp:Image>
+                        <asp:LinkButton ID="lnkBrand" runat="server" OnClick="lnkBrand_Click" class="navbar-brand"><asp:Image runat="server" AlternateText="Book Exchange Logo" ImageUrl="img/logo.png" class="img-responsive" Style="max-width: 120%;height: inherit;margin-top: -15px;"></asp:Image>
                         </asp:LinkButton>
                     </div>
 
@@ -77,28 +79,32 @@
 
         </div>
         <!-- /.container-fluid -->
-        <div class="container" style="padding-top: 3%;" >
+        <div class="container" style="padding-top: 3%;">
             <div class="row">
                 <div class="col-lg-6">
                     <h1 class="page-header text-center">Login</h1>
                     <div class="col-md-12">
-                        <asp:TextBox ID="tbLoggedIn" runat="server" CssClass="form-control text-center" EnableViewState="False" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
-                        <asp:ValidationSummary ID="LoginValidationSummary" runat="server" ValidationGroup="Login" ForeColor="#CC0000" HeaderText="The following errors occured:" />
+                        <div class="text-center">
+                            <asp:Label ID="tbLoggedIn" runat="server" CssClass="alert-danger alert-dissmisible"></asp:Label>
+                        </div>
+                        <asp:ValidationSummary ID="LoginValidationSummary" runat="server" ValidationGroup="Login" HeaderText="The following errors occured:" ForeColor="#CC0000" />
                     </div>
-                    <hr>
+                    <div>
+                        &nbsp;
+                    </div>
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
                             <label for="inputLoginUsername" class="col-sm-2 control-label">Username</label>
                             <div class="col-sm-10">
                                 <asp:TextBox ID="inputLoginUsername" CssClass="form-control" runat="server" EnableViewState="False"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="inputLoginUsernameValidator" runat="server" ErrorMessage="You must specify a Username!" ControlToValidate="inputLoginUsername" Display="None" ValidationGroup="Login"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="inputLoginUsernameValidator" runat="server" ErrorMessage="You must specify a Username!" ControlToValidate="inputLoginUsername" Display="None" ValidationGroup="Login" CssClass="alert-danger"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputLoginPassword" class="col-sm-2 control-label">Password</label>
                             <div class="col-sm-10">
                                 <asp:TextBox runat="server" ID="inputLoginPassword" CssClass="form-control" TextMode="Password" EnableViewState="False"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="inputLoginPasswordValidator" runat="server" ErrorMessage="You must specify a password!" ControlToValidate="inputLoginPassword" Display="None" ValidationGroup="Login"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="inputLoginPasswordValidator" runat="server" ErrorMessage="You must specify a password!" ControlToValidate="inputLoginPassword" Display="None" ValidationGroup="Login" CssClass="alert-danger"></asp:RequiredFieldValidator>
 
                             </div>
                         </div>
@@ -116,9 +122,14 @@
                     <h1 class="page-header text-center">Register</h1>
                     <div class="col-md-12">
                         <asp:ValidationSummary ID="ValidationSummaryRegister" runat="server" ValidationGroup="Register" ForeColor="#CC0000" HeaderText="The following errors occured:" />
-                        <asp:TextBox ID="tbHasUser" runat="server" CssClass="form-control text-center" EnableViewState="False" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
+                        <div class="text-center">
+                            <asp:Label ID="tbHasUser" runat="server" CssClass="alert-danger form-control alert-dissmisible"></asp:Label>
+                        </div>
                     </div>
-                    <hr />
+                    <div>
+                        &nbsp;
+                    </div>
+
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
                             <label for="inputUsername" class="col-sm-2 control-label">Username</label>
@@ -176,7 +187,7 @@
                     </div>
                 </div>
             </div>
-             <footer class="footer text-center">
+            <footer class="footer text-center">
                 <hr />
                 <div class="col-md-5">
                     <div>

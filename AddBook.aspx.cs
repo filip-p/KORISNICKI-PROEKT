@@ -12,7 +12,7 @@ public partial class AddBook : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
         if (!this.IsPostBack)
         {
             if (Session["New"] != null)
@@ -29,6 +29,8 @@ public partial class AddBook : System.Web.UI.Page
                 lbUser.Visible = false;
                 lblTime.Visible = false;
                 footerLbl.Visible = false;
+                Response.Redirect("Login.aspx?err=2", false);
+                Context.ApplicationInstance.CompleteRequest();
             }
             booksNumber.Value = getNumberOfItems("BookData").ToString();
             usersNumber.Value = getNumberOfItems("UserData").ToString();
@@ -41,7 +43,7 @@ public partial class AddBook : System.Web.UI.Page
         Context.ApplicationInstance.CompleteRequest();
 
     }
-  
+
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
         if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register")
@@ -73,7 +75,7 @@ public partial class AddBook : System.Web.UI.Page
         Context.ApplicationInstance.CompleteRequest();
 
     }
- 
+
     protected void lnkCatalog_Click(object sender, EventArgs e)
     {
         Response.Redirect("Catalog.aspx", false);
@@ -138,21 +140,46 @@ public partial class AddBook : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@bname", inputBookTitle.Text);
                 cmd.Parameters.AddWithValue("@bau", inputBookAuthor.Text);
                 cmd.Parameters.AddWithValue("@bseu", Session["New"].ToString());
-                cmd.Parameters.AddWithValue("@bpri", inputBookPrice.Text);
                 cmd.Parameters.AddWithValue("@bdes", inputBookDescription.Text);
                 cmd.Parameters.Add("@bimg", SqlDbType.Image).Value = imgbyte;
-                cmd.Parameters.AddWithValue("@bnfe", inputBookNeeded.Text);
+                string bookNeeded = inputBookNeeded.Text.Trim();
+                if (!(bookNeeded.ToUpper().Equals("NONE")))
+                    cmd.Parameters.AddWithValue("@bnfe", bookNeeded);
+                else
+                {
+                    cmd.Parameters.AddWithValue("@bnfe", DBNull.Value);
+                }
+                string bookPrice = inputBookPrice.Text.Trim();
+                if (!(bookPrice.ToUpper().Equals("0")))
+                    cmd.Parameters.AddWithValue("@bpri", bookPrice + " $");
+                else
+                {
+                    cmd.Parameters.AddWithValue("@bpri", DBNull.Value);
+                }
 
-                cmd.ExecuteNonQuery();
+
+                int a = cmd.ExecuteNonQuery();
+                if (a == 1)
+                {
+                    tbBookAdded.Text = "The book has been successfully added to the catalog";
+                    tbBookAdded.Visible = true;
+                }
             }
             catch (Exception err)
             {
-                TextBox1.Text = err.Message;
+                //    TextBox1.Text = err.Message;
             }
             finally
             {
                 connection.Close();
+
             }
         }
     }
+    protected void cancelSubmitBook_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Catalog.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
+    }
+
 }

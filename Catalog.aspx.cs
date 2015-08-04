@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,8 @@ public partial class Catalog : System.Web.UI.Page
 {
     int j = 0;
     string id = "";
+    DropDownList ddll;
+   
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!this.IsPostBack)
@@ -27,7 +30,7 @@ public partial class Catalog : System.Web.UI.Page
             else
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
-          
+
                 footerLbl.Visible = false;
                 Response.Redirect("Login.aspx?err=1", false);
                 Context.ApplicationInstance.CompleteRequest();
@@ -42,7 +45,7 @@ public partial class Catalog : System.Web.UI.Page
         }
         if (this.IsPostBack)
         {
-            prikaziStavki(null);
+           prikaziStavki(null);
         }
     }
     protected void prikaziStavki(string Name)
@@ -61,9 +64,17 @@ public partial class Catalog : System.Web.UI.Page
             scom = "SELECT Id, BookName, BookImage, BookAuthor, BookDescription, BookPrice, BookSellerUser,BookNeededForExchange FROM BookData WHERE BookName LIKE '%" + Name + "%'";
         }
         komanda.CommandText = scom;
+        SqlDataAdapter adapter = new SqlDataAdapter();
+        adapter.SelectCommand = komanda;
+        DataSet ds = new DataSet();
+
         try
         {
             connection.Open();
+            //adapter.Fill(ds,"Books");
+            //showTableGridView.DataSource= ds;
+            //showTableGridView.DataBind();
+            //ViewState["dataset"]=ds;
             SqlDataReader reader = komanda.ExecuteReader();
 
             TableHeaderRow th = new TableHeaderRow();
@@ -72,25 +83,25 @@ public partial class Catalog : System.Web.UI.Page
 
             TableHeaderCell thd = new TableHeaderCell();
             Label lbl = new Label();
-            lbl.Text = "BookName";
+            lbl.Text = "<h3>BookName</h3>";
             thd.Controls.Add(lbl);
             thd.CssClass = "col-sm-3 text-center";
 
             TableHeaderCell thd2 = new TableHeaderCell();
             Label lbl2 = new Label();
-            lbl2.Text = "Book Author and Description";
+            lbl2.Text = "<h3>Book Author & Description</h3>";
             thd2.Controls.Add(lbl2);
             thd2.CssClass = "col-sm-4 text-center";
 
             TableHeaderCell thd3 = new TableHeaderCell();
             Label lbl3 = new Label();
-            lbl3.Text = "Seller";
+            lbl3.Text = "<h3>Seller</h3>";
             thd3.Controls.Add(lbl3);
             thd3.CssClass = "col-sm-3 text-center";
 
             TableHeaderCell thd4 = new TableHeaderCell();
             Label lbl4 = new Label();
-            lbl4.Text = "&nbsp;";
+            lbl4.Text = "<h3>&nbsp;</h3>";
             thd4.Controls.Add(lbl4);
             thd4.CssClass = "col-sm-2 text-center";
 
@@ -107,7 +118,8 @@ public partial class Catalog : System.Web.UI.Page
                 TableRow tr = new TableRow();
                 TableCell td = new TableCell();
                 Label spanBookName = new Label();
-                spanBookName.Text = reader["BookName"].ToString();
+                string BookName = reader["BookName"].ToString();
+                spanBookName.Text = "<h4 class=\"text-center\">" + BookName + "</h4>";
                 byte[] picData = (byte[])reader["BookImage"];
                 string imageBase64 = Convert.ToBase64String(picData);
                 string imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
@@ -123,63 +135,101 @@ public partial class Catalog : System.Web.UI.Page
                 tr.Cells.Add(td);
 
                 TableCell td2 = new TableCell();
-                td2.Text = "<h4>" + reader["BookAuthor"].ToString() + "</h4><hr />" +
+                td2.Text = "<h4 class=\"text-center\">" + reader["BookAuthor"].ToString() + "</h4><hr />" +
                 "<p>" + reader["BookDescription"].ToString() + "</p>";
                 td2.CssClass = "col-sm-4";
                 tr.Cells.Add(td2);
 
                 TableCell td3 = new TableCell();
                 string exchange = reader["BookNeededForExchange"].ToString();
-                td3.Text = "<h4>" + reader["BookSellerUser"].ToString() + "</h4>" +
-                    "<h4>Price = " + reader["BookPrice"].ToString() + "</h4><hr /><p>Tradeable for:</p><p>" + exchange + "</p>";
+                bool buyable = true;
+                bool exchangeable = true;
+                string BookPrice = reader["BookPrice"].ToString();
+                if (reader["BookNeededForExchange"] != DBNull.Value)
+                {
+                    if (reader["BookPrice"] != DBNull.Value)
+                    {
+                        td3.Text = "<h4 class=\"text-center\">" + reader["BookSellerUser"].ToString() + "</h4><hr />" +
+                            "<h4 class=\"text-center\">Price = " + reader["BookPrice"].ToString() + "</h4><hr /><p>Exchangeable for:</p><p>" + exchange + "</p><hr />";
+                    }
+                    else
+                    {
+                        buyable = false;
+                        td3.Text = "<h4 class=\"text-center\">" + reader["BookSellerUser"].ToString() + "</h4><hr />" +
+                         "<h4 class=\"text-center\">The item is for Exchange ONLY!</h4><hr /><p>Exchangeable for:</p><p>" + exchange + "</p><hr />";
+                    }
+                }
+                else
+                {
+                    exchangeable = false;
+                    td3.Text = "<h4 class=\"text-center\">" + reader["BookSellerUser"].ToString() + "</h4><hr />" +
+                        "<h4 class=\"text-center\">Price = " + reader["BookPrice"].ToString() + "</h4><hr /><p>This book is not exchangeable!</p><hr />";
+                }
                 td3.CssClass = "col-sm-3";
                 tr.Cells.Add(td3);
 
                 TableCell td4 = new TableCell();
+                td4.Style.Add(HtmlTextWriterStyle.VerticalAlign, "middle");
                 LinkButton btn = new LinkButton();
                 btn.ID = "btnBuy" + j;
+                btn.OnClientClick = "return confirm('Are you sure you want to buy \"" + BookName + "\" for \"" + BookPrice + "\"?');";
                 btn.Command += new CommandEventHandler(this.btn_Command);
                 btn.CommandArgument = reader["Id"].ToString();
                 btn.CssClass = "btn btn-success btn-block";
                 btn.Text = "<span class=\"fa fa-usd\"></span> Buy";
-                btn.Attributes.Add("data-toggle", "modal");
-                btn.Attributes.Add("data-target", "#myModal");
-                
+
+
                 LinkButton btn2 = new LinkButton();
+
                 btn2.ID = "btnExchange" + j;
                 btn2.Command += new CommandEventHandler(this.btn_Command2);
                 btn2.CommandArgument = reader["Id"].ToString();
+                btn2.OnClientClick = "return confirm('Are you sure you want to exchange this book?');";
                 btn2.CssClass = "btn btn-info btn-block";
                 btn2.Text = "<span class=\"glyphicon glyphicon-transfer\"></span> Exchange";
+                ddll = new DropDownList();
+                if (buyable)
+                    td4.Controls.Add(btn);
+                if (exchangeable)
+                    td4.Controls.Add(btn2);
 
-                DropDownList ddl = new DropDownList();
-
-                td4.Controls.Add(btn);
-                td4.Controls.Add(btn2);
                 if (reader["BookSellerUser"].ToString().Equals(Session["New"].ToString()))
                 {
                     btn.CssClass += " disabled";
                     btn2.CssClass += " disabled";
                     Label cantBuyLabel = new Label();
-                    cantBuyLabel.Text = "You can't buy or exchange this book because you are it's seller";
+                    if (exchangeable && buyable)
+                        cantBuyLabel.Text = "You can't buy or exchange this book because you are it's seller";
+                    else if (exchangeable && !buyable)
+                        cantBuyLabel.Text = "You can't exchange this book because you are it's seller";
+                    else if (!exchangeable && buyable)
+                        cantBuyLabel.Text = "You can't buy this book because you are it's seller";
                     td4.Controls.Add(cantBuyLabel);
                 }
                 else
                 {
-                    string[] items = exchange.Split(',');
+                    string[] items = exchange.Split(';');
                     for (int i = 0; i < items.Length; i++)
-                        ddl.Items.Add(items[i]);
-                    ddl.CssClass = "dropdownz";
-                    td4.Controls.Add(ddl);
+                    {
+                        ddll.Items.Add(items[i]);
+                    }
+                    ddll.SelectedIndex = 0;
+                    ddll.ID = "ddl" + j;
+                    ddll.CssClass = "dropdownz";
+
+                    ddll.SelectedIndexChanged += new EventHandler(ddll_SelectedIndexChanged);
+                    ddlItem.Value = ddll.SelectedValue.ToString();
+                    if (exchangeable)
+                        td4.Controls.Add(ddll);
                 }
+
+
                 td4.CssClass = "col-sm-2";
                 tr.Cells.Add(td4);
-           
+
                 bookShowTable.Rows.Add(tr);
             }
-
             reader.Close();
-
         }
         catch (Exception err)
         {
@@ -194,8 +244,12 @@ public partial class Catalog : System.Web.UI.Page
                     bookShowTable.Rows.RemoveAt(i);
                 bookShowTable.Visible = false;
             }
-
         }
+    }
+
+   protected void ddll_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        ddlItem.Value = ddll.SelectedValue.ToString();
     }
 
     private void btn_Command2(object sender, CommandEventArgs e)
@@ -205,43 +259,19 @@ public partial class Catalog : System.Web.UI.Page
 
     private void btn_Command(object sender, CommandEventArgs e)
     {
-        string bookName;
-        string bookPrice;
-        SqlConnection connection = new SqlConnection();
-        connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
-        SqlCommand command = new SqlCommand();
-        command.Connection = connection;
-        command.CommandText = "Select BookName, BookPrice from BookData where Id='" + e.CommandArgument.ToString() +"'";
-        try
-        {
-            connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            bookName = reader["BookName"].ToString();
-            bookPrice = reader["BookPrice"].ToString();
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "!confirm('Are you sure you want to buy " +bookName +" for "+bookPrice +"');", true);
-
-        }
-        catch (Exception err)
-        {
-
-        }
-        finally
-        {
-            connection.Close();
-        }
+        Response.Redirect("Purchasing.aspx?id=" + e.CommandArgument.ToString(), false);
+        Context.ApplicationInstance.CompleteRequest();
     }
 
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
         Response.Redirect("Home.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
-
     }
     protected void lnkWishlist_Click(object sender, EventArgs e)
     {
         Response.Redirect("Wishlist.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
-
     }
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
@@ -253,11 +283,9 @@ public partial class Catalog : System.Web.UI.Page
         }
         else if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-out\"></span> Logout")
         {
-
             Session["New"] = null;
             Response.Redirect("Login.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
-
         }
     }
     protected void lnkSearch_Click(object sender, EventArgs e)
@@ -272,26 +300,22 @@ public partial class Catalog : System.Web.UI.Page
     {
         Response.Redirect("ContactAbout.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
-
     }
     protected void lnkCart_Click(object sender, EventArgs e)
     {
         Response.Redirect("Cart.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
-
     }
     protected void lnkCatalog_Click(object sender, EventArgs e)
     {
         Response.Redirect("Catalog.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
-
     }
 
     protected void lnkBrand_Click(object sender, EventArgs e)
     {
         Response.Redirect("Home.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
-
     }
 
     protected void AddBook_Click(object sender, EventArgs e)
@@ -299,4 +323,5 @@ public partial class Catalog : System.Web.UI.Page
         Response.Redirect("AddBook.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
+    
 }

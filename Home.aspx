@@ -5,17 +5,16 @@
 <head runat="server">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link runat="server" rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/favicon.ico" type="image/ico" />
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/test.css" rel="stylesheet" type="text/css">
+    <link href="css/customCss.css" rel="stylesheet" type="text/css">
     <link href="fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- Fonts -->
-    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <title>Book Exchange Home</title>
+    <title>Book Exchange Home Page</title>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,7 +36,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <asp:LinkButton ID="lnkBrand" runat="server" OnClick="lnkBrand_Click" Style="margin-top: -0.5em" class="navbar-brand"><asp:Image runat="server" AlternateText="Book Exchange Logo" ImageUrl="img/logo.jpg" class="img-responsive"></asp:Image>
+                        <asp:LinkButton ID="lnkBrand" runat="server" OnClick="lnkBrand_Click" class="navbar-brand"><asp:Image runat="server" AlternateText="Book Exchange Logo" ImageUrl="img/logo.png" class="img-responsive" Style="max-width: 120%;height: inherit;margin-top: -15px;"></asp:Image>
                         </asp:LinkButton>
                     </div>
 
@@ -75,8 +74,7 @@
 
         </div>
         <!-- /.container-fluid -->
-        <%--rgba(111,175,11,0.7);--%>
-        <div class="container-fluid" style="background-color: #fff; padding-top: 50px">
+        <div class="container-fluid" style="background-color: rgba(111,175,11,0.7); padding-top: 50px">
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <h1 style="font-size: 3em;" class="visible-lg visible-md">Book Exchange</h1>
@@ -88,14 +86,14 @@
         </div>
 
         <%--18bc9c--%>
-        <div class="container-fluid" style="background-color: #fff;">
+        <div class="container-fluid" style="background-color: rgba(111,175,11,0.7);">
             <div class="row">
                 <div class="col-sm-12">
                     <section id="carousel">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2">
-                                    <div class="quote"><i class="fa fa-quote-left fa-4x"></i></div>
+                                    <div class="quote"><i class="fa fa-quote-left fa-3x"></i></div>
                                     <div class="carousel slide" id="fade-quote-carousel" data-ride="carousel" data-interval="5000">
                                         <!-- Carousel indicators -->
                                         <ol class="carousel-indicators">

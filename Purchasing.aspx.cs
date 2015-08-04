@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class ContactAbout : System.Web.UI.Page
+public partial class Purchasing : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
         if (!this.IsPostBack)
         {
             if (Session["New"] != null)
@@ -25,8 +28,46 @@ public partial class ContactAbout : System.Web.UI.Page
                 lbUser.Visible = false;
                 lblTime.Visible = false;
                 footerLbl.Visible = false;
+                Response.Redirect("Login.aspx?err=3", false);
+                Context.ApplicationInstance.CompleteRequest();
             }
             lblYear.Text = DateTime.Now.Year.ToString();
+            addItemInfo();
+        }
+    }
+    protected void addItemInfo()
+    {
+        string ID = Request.QueryString["id"];
+        SqlConnection connection = new SqlConnection();
+        connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
+        SqlCommand command = new SqlCommand();
+        command.Connection = connection;
+        command.CommandText = "SELECT * FROM BookData WHERE Id='" + ID + "'";
+        try
+        {
+            connection.Open();
+
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                byte[] picData = (byte[])reader["BookImage"];
+                string imageBase64 = Convert.ToBase64String(picData);
+                string imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
+                imgPurchasing.ImageUrl = imageSrc;
+                namePurchasing.Text = reader["BookName"].ToString();
+                authorPurchasing.Text = reader["BookAuthor"].ToString();
+                pricePurchasing.Text = reader["BookPrice"].ToString();
+                descriptionPurchasing.Text = reader["BookDescription"].ToString();
+                reader.Close();
+            }
+        }
+        catch (Exception err)
+        {
+
+        }
+        finally
+        {
+            connection.Close();
         }
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
@@ -35,12 +76,7 @@ public partial class ContactAbout : System.Web.UI.Page
         Context.ApplicationInstance.CompleteRequest();
 
     }
-    protected void lnkWishlist_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("Wishlist.aspx", false);
-        Context.ApplicationInstance.CompleteRequest();
 
-    }
     protected void lnkLoginRegister_Click(object sender, EventArgs e)
     {
         if (lnkLoginRegister.Text == "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register")
@@ -72,16 +108,12 @@ public partial class ContactAbout : System.Web.UI.Page
         Context.ApplicationInstance.CompleteRequest();
 
     }
-    protected void lnkCart_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("Cart.aspx", false);
-        Context.ApplicationInstance.CompleteRequest();
 
-    }
     protected void lnkCatalog_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Catalog.aspx",false);
+        Response.Redirect("Catalog.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
+
     }
 
     protected void lnkBrand_Click(object sender, EventArgs e)
@@ -89,5 +121,14 @@ public partial class ContactAbout : System.Web.UI.Page
         Response.Redirect("Home.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
 
+    }
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+
+    }
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Catalog.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
     }
 }

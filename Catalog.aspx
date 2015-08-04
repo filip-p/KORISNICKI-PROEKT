@@ -5,6 +5,8 @@
 <head runat="server">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link runat="server" rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/favicon.ico" type="image/ico" />
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -12,10 +14,7 @@
     <link href="fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
-    <!-- Fonts -->
-    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <title>Book Exchange Home</title>
+    <title>Book Exchange Catalog Page</title>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,7 +41,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <asp:LinkButton ID="lnkBrand" runat="server" OnClick="lnkBrand_Click" Style="margin-top: -0.5em" class="navbar-brand"><asp:Image runat="server" AlternateText="Book Exchange Logo" ImageUrl="img/logo.jpg" class="img-responsive"></asp:Image>
+                        <asp:LinkButton ID="lnkBrand" runat="server" OnClick="lnkBrand_Click" class="navbar-brand"><asp:Image runat="server" AlternateText="Book Exchange Logo" ImageUrl="img/logo.png" class="img-responsive" Style="max-width: 120%;height: inherit;margin-top: -15px;"></asp:Image>
                         </asp:LinkButton>
                     </div>
 
@@ -84,11 +83,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h4 class="page-header text-center">Добредојдовте во каталогот на производи,
-                         тука може да ги најдете книгите кои можете да ги купите/изнајмите,
-                         или вие самите да одберете опција за додавање на книга за купување/
-                        изнајмување.
-                    </h4>
+                    <h1 class="page-header text-center" id="catalog">Book Catalog</h1>
                     <div>
                         <asp:LinkButton ID="AddBook" runat="server" CssClass="btn btn-info" OnClick="AddBook_Click"><span class="glyphicon glyphicon-plus-sign"></span> Add Book</asp:LinkButton>
                     </div>
@@ -97,12 +92,14 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <asp:Table ID="bookShowTable" CssClass="table table-hover table-responsive table-bordered" Style="text-transform: none;" runat="server"></asp:Table>
+                    <asp:Table ID="bookShowTable" CssClass="table table-hover table-responsive" Style="text-transform: none;" runat="server"></asp:Table>
+                    <%--<asp:GridView ID="showTableGridView" runat="server" CssClass="table table-hover table-responsive" AutoGenerateColumns="False">
+                    </asp:GridView>--%>
                     <asp:TextBox ID="tbError" runat="server" Visible="False"></asp:TextBox>
                 </div>
             </div>
-
-             <footer class="footer text-center">
+            <asp:HiddenField ID="ddlItem" runat="server" />
+            <footer class="footer text-center">
                 <hr />
                 <div class="col-md-5">
                     <div>

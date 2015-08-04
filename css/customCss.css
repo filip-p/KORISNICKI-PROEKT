@@ -114,10 +114,17 @@
 .dropdownz {
     width: 100% !important;
 }
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fonts/fonts/Montserrat-Regular.ttf')  format('truetype');
+     
+}
+
+
 
 body {
     text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Montserrat',Helvetica,Arial,sans-serif;
 }
 
 hr.style-rainbow {
@@ -237,7 +244,7 @@ section {
 }
 
 .quote {
-    color: rgba(0,0,0,.1);
+   
     text-align: center;
 }
 
@@ -293,4 +300,17 @@ section {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size:cover;
+}
+.jumbsotron#contactForm {
+background: #358CCE;
+color: #FFF;
+border-radius: 0px;
+}
+.jumbotron-sm#contactForm { padding-top: 24px;
+padding-bottom: 24px; }
+.jumbotron small {
+color: #FFF;
+}
+.h1 small#contactForm  {
+font-size: 24px;
 }

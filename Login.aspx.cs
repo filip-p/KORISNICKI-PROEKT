@@ -49,9 +49,21 @@ public partial class Login : System.Web.UI.Page
             }
             if (Request.QueryString["err"] != null)
             {
-                tbLoggedIn.Text = "You need to be Logged in to view the Catalog!";
-                tbLoggedIn.Visible = true;
-
+                if (Request.QueryString["err"] == "1")
+                {
+                    tbLoggedIn.Text = "You need to be Logged in to view the catalog!";
+                    tbLoggedIn.Visible = true;
+                }
+                else if (Request.QueryString["err"] == "2")
+                {
+                    tbLoggedIn.Text = "You need to be Logged in to add new books to the catalog!";
+                    tbLoggedIn.Visible = true;
+                }
+                else  if (Request.QueryString["err"] == "3")
+                {
+                    tbLoggedIn.Text = "You need to be Logged in to purchase or exchange that item!";
+                    tbLoggedIn.Visible = true;
+                }
             }
             lblYear.Text = DateTime.Now.Year.ToString();
         }
@@ -141,24 +153,14 @@ public partial class Login : System.Web.UI.Page
             conn.Open();
             Guid newGUID = Guid.NewGuid();
             command.Parameters.AddWithValue("@id", newGUID.ToString());
-            command.Parameters.AddWithValue("@Uname", inputUsername.Text);
+            command.Parameters.AddWithValue("@Uname", inputUsername.Text.Trim());
             command.Parameters.AddWithValue("@pass", inputPassword.Text);
-            command.Parameters.AddWithValue("@em", inputEmail.Text);
-            command.Parameters.AddWithValue("@facult", inputFaculty.Text);
+            command.Parameters.AddWithValue("@em", inputEmail.Text.Trim());
+            command.Parameters.AddWithValue("@facult", inputFaculty.Text.Trim());
             command.ExecuteNonQuery();
             tbHasUser.Visible = true;
             tbHasUser.Text = "Registration was successful, you can now login with your new account and welcome to BookExchange";
-           Application.Lock();
-           if (Application["brojKorisnici"] == null)
-           {
-               Application["brojKorisnici"] = 1;
-           }
-           else
-           {
-               Application["brojKorisnici"] = ((int)Application["brojKorisnici"]) + 1;
-           }
-
-                Application.UnLock();
+        
         }
         catch (Exception e)
         {
