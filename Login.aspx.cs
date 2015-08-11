@@ -14,7 +14,8 @@ public partial class Login : System.Web.UI.Page
 
         if (this.IsPostBack)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString);
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
             conn.Open();
             string checkuser = "SELECT count(*) FROM UserData WHERE username='" + inputUsername.Text + "'";
             SqlCommand command = new SqlCommand(checkuser, conn);
@@ -34,11 +35,13 @@ public partial class Login : System.Web.UI.Page
             tbHasUser.Text = "";
             if (Session["New"] != null)
             {
-                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
-                lbUser.Text = (string)Session["New"];
-                lbUser.Visible = true;
-                lblTime.Visible = true;
-                lblTime.Text = DateTime.Now.ToString();
+                
+                    lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                    lbUser.Text = (string)Session["New"];
+                    lbUser.Visible = true;
+                    lblTime.Visible = true;
+                    lblTime.Text = DateTime.Now.ToString();
+              
             }
             else
             {

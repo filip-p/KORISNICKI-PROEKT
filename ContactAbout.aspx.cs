@@ -13,11 +13,13 @@ public partial class ContactAbout : System.Web.UI.Page
         {
             if (Session["New"] != null)
             {
-                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
-                lbUser.Text = (string)Session["New"];
-                lbUser.Visible = true;
-                lblTime.Visible = true;
-                lblTime.Text = DateTime.Now.ToString();
+              
+                    lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                    lbUser.Text = (string)Session["New"];
+                    lbUser.Visible = true;
+                    lblTime.Visible = true;
+                    lblTime.Text = DateTime.Now.ToString();
+           
             }
             else
             {
@@ -80,7 +82,7 @@ public partial class ContactAbout : System.Web.UI.Page
     }
     protected void lnkCatalog_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Catalog.aspx",false);
+        Response.Redirect("Catalog.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
 

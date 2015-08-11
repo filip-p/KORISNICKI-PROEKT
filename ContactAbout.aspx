@@ -159,6 +159,8 @@
             </div>
             <%--end Contact Form--%>
             <hr />
+
+            <%--Live Chat--%>           
             <div class="row">
                 <div class="col-md-2">&nbsp;</div>
                 <div class="col-md-8 text-center">
@@ -168,23 +170,25 @@
                             <div class="input-group">
                                 <asp:TextBox runat="server" ID="liveChatMessageBox" Placeholder="Type your message here!" CssClass="form-control"></asp:TextBox>
                                 <span class="input-group-btn">
-                                    <input type="button" id="liveChatSendMessage" value="Send" class="btn btn-primary"  />
-                                    <%--<asp:LinkButton runat="server" ID="liveChatSendMessage" Text="Send" CssClass="btn btn-primary" CausesValidation="False" UseSubmitBehavior="True"></asp:LinkButton>--%>
+                                    <input type="button" id="liveChatSendMessage" value="Send" class="btn btn-primary" />
                                 </span>
                             </div>
                             <asp:HiddenField ID="loggedInUserName" runat="server" />
-                            <ul id="liveChatSentMessagesField" class="text-left" style="text-transform: none;">
+                            <asp:HiddenField ID="loggedInUserColor" runat="server" />
+                            <ul id="liveChatSentMessagesField" class="text-left" style="text-transform: none; padding-top: 10px">
                             </ul>
                         </div>
                     </div>
 
                     <script type="text/javascript">
                         $(function () {
+                            var color = 0;
                             var chat = $.connection.chatHub;
-                            chat.client.broadcastMessage = function (name, message) {
+                            chat.client.broadcastMessage = function (name, message, colors) {
                                 var encodedName = $('<div />').text(name).html();
                                 var encodedMsg = $('<div />').text(message).html();
-                                $('#liveChatSentMessagesField').append('<li><strong>' + encodedName
+
+                                $('#liveChatSentMessagesField').append("<li><strong style=\" color:rgb(" + colors[0] + "," + colors[1] + "," + colors[2] + "\")>" + encodedName
                                     + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
                             };
                             var isLoggedIn = $('#lnkLoginRegister').text();
@@ -194,13 +198,20 @@
                                 $('#liveChatSendMessage').attr('disabled', 'disabled');
                             }
                             else {
+                                var color1 = Math.floor((Math.random() * 255) + 1);
+                                var color2 = Math.floor((Math.random() * 255) + 1);
+                                var color3 = Math.floor((Math.random() * 255) + 1);
+                                $('#loggedInUserColor').val(color1.toString() + "," + color2.toString() + "," + color3.toString());
                                 $('#loggedInUserName').val($('#lbUser').text().toString());
                                 $('#liveChatMessageBox').focus();
+
                             }
                             $.connection.hub.start().done(function () {
                                 $('#liveChatSendMessage').click(function () {
                                     if ($.trim($('#liveChatMessageBox').val()).length > 0) {
-                                        chat.server.send($('#loggedInUserName').val(), $('#liveChatMessageBox').val());
+                                        var color = $('#loggedInUserColor').val();
+                                        var colors = color.split(",");
+                                        chat.server.send($('#loggedInUserName').val(), $('#liveChatMessageBox').val(), colors);
                                         $('#liveChatMessageBox').val('').focus();
                                     }
                                 });
@@ -210,7 +221,7 @@
                 </div>
                 <div class="col-md-2">&nbsp;</div>
             </div>
-
+            <%--End live chat--%>
             <%--Google maps ember iframes--%>
             <div class="row">
                 <div class="col-md-12 visible-lg visible-md text-center">
@@ -267,7 +278,8 @@
                         <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
                             <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
                             - 
-                        <i class="icon-calendar"></i>
+                       
+                            <i class="icon-calendar"></i>
                             <asp:Label ID="lblTime" runat="server"></asp:Label>
                         </asp:Label>
                     </div>
@@ -287,6 +299,7 @@
                 <hr class="visible-xs visible-sm" />
                 <div class="col-md-3">
                     Copyright &copy; Book Exchange
+                   
                     <asp:Label ID="lblYear" runat="server"></asp:Label>
                 </div>
 

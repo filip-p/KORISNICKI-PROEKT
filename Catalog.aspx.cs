@@ -14,21 +14,24 @@ public partial class Catalog : System.Web.UI.Page
     int j = 0;
     string id = "";
     DropDownList ddll;
-   
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!this.IsPostBack)
         {
             if (Session["New"] != null)
             {
+
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
                 lbUser.Text = (string)Session["New"];
                 lbUser.Visible = true;
                 lblTime.Visible = true;
                 lblTime.Text = DateTime.Now.ToString();
+
             }
             else
             {
+
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
 
                 footerLbl.Visible = false;
@@ -45,7 +48,7 @@ public partial class Catalog : System.Web.UI.Page
         }
         if (this.IsPostBack)
         {
-           prikaziStavki(null);
+            prikaziStavki(null);
         }
     }
     protected void prikaziStavki(string Name)
@@ -64,17 +67,12 @@ public partial class Catalog : System.Web.UI.Page
             scom = "SELECT Id, BookName, BookImage, BookAuthor, BookDescription, BookPrice, BookSellerUser,BookNeededForExchange FROM BookData WHERE BookName LIKE '%" + Name + "%'";
         }
         komanda.CommandText = scom;
-        SqlDataAdapter adapter = new SqlDataAdapter();
-        adapter.SelectCommand = komanda;
-        DataSet ds = new DataSet();
+      
 
         try
         {
             connection.Open();
-            //adapter.Fill(ds,"Books");
-            //showTableGridView.DataSource= ds;
-            //showTableGridView.DataBind();
-            //ViewState["dataset"]=ds;
+           
             SqlDataReader reader = komanda.ExecuteReader();
 
             TableHeaderRow th = new TableHeaderRow();
@@ -114,6 +112,7 @@ public partial class Catalog : System.Web.UI.Page
             j = 0;
             while (reader.Read())
             {
+
                 j++;
                 TableRow tr = new TableRow();
                 TableCell td = new TableCell();
@@ -245,9 +244,10 @@ public partial class Catalog : System.Web.UI.Page
                 bookShowTable.Visible = false;
             }
         }
+
     }
 
-   protected void ddll_SelectedIndexChanged(object sender, EventArgs e)
+    protected void ddll_SelectedIndexChanged(object sender, EventArgs e)
     {
         ddlItem.Value = ddll.SelectedValue.ToString();
     }
@@ -323,5 +323,5 @@ public partial class Catalog : System.Web.UI.Page
         Response.Redirect("AddBook.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
-    
+
 }

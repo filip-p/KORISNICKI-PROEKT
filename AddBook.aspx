@@ -93,6 +93,7 @@
                                 <asp:Label ID="tbBookAdded" runat="server" CssClass="alert-success"></asp:Label>
                             </div>
                             <div>
+
                                 <asp:ValidationSummary ID="AddBookSummary" runat="server" HeaderText="The list of errors that occured:" ForeColor="#CC0000" ValidationGroup="AddBook" />
                             </div>
                             <div class="form-group">

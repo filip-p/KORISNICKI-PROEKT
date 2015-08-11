@@ -93,8 +93,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <asp:Table ID="bookShowTable" CssClass="table table-hover table-responsive" Style="text-transform: none;" runat="server"></asp:Table>
-                    <%--<asp:GridView ID="showTableGridView" runat="server" CssClass="table table-hover table-responsive" AutoGenerateColumns="False">
-                    </asp:GridView>--%>
+                    <%--<asp:GridView ID="showTableGridView" runat="server" CssClass="table table-hover table-responsive">
+                                     </asp:GridView>--%>
                     <asp:TextBox ID="tbError" runat="server" Visible="False"></asp:TextBox>
                 </div>
             </div>
@@ -115,7 +115,8 @@
                         <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
                             <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
                             - 
-                        <i class="icon-calendar"></i>
+                       
+                            <i class="icon-calendar"></i>
                             <asp:Label ID="lblTime" runat="server"></asp:Label>
                         </asp:Label>
                     </div>
@@ -135,6 +136,7 @@
                 <hr class="visible-xs visible-sm" />
                 <div class="col-md-3">
                     Copyright &copy; Book Exchange
+                   
                     <asp:Label ID="lblYear" runat="server"></asp:Label>
                 </div>
 

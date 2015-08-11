@@ -14,11 +14,23 @@ public partial class Home : System.Web.UI.Page
         {
             if (Session["New"] != null)
             {
-                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
-                lbUser.Text = (string)Session["New"];
-                lbUser.Visible = true;
-                lblTime.Visible = true;
-                lblTime.Text = DateTime.Now.ToString();
+                if ((string)Session["New"] == "admin")
+                {
+                    if (Request.QueryString["admin"] == null)
+                    {
+                        Response.Redirect("AdminPage.aspx", false);
+                        Context.ApplicationInstance.CompleteRequest();
+                    }
+                }
+
+                else
+                {
+                    lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                    lbUser.Text = (string)Session["New"];
+                    lbUser.Visible = true;
+                    lblTime.Visible = true;
+                    lblTime.Text = DateTime.Now.ToString();
+                }
             }
             else
             {
@@ -28,11 +40,11 @@ public partial class Home : System.Web.UI.Page
                 footerLbl.Visible = false;
             }
             lblYear.Text = DateTime.Now.Year.ToString();
-            
+
         }
     }
 
-   
+
 
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {

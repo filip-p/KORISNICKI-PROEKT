@@ -17,11 +17,13 @@ public partial class AddBook : System.Web.UI.Page
         {
             if (Session["New"] != null)
             {
-                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
-                lbUser.Text = (string)Session["New"];
-                lbUser.Visible = true;
-                lblTime.Visible = true;
-                lblTime.Text = DateTime.Now.ToString();
+              
+                    lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                    lbUser.Text = (string)Session["New"];
+                    lbUser.Visible = true;
+                    lblTime.Visible = true;
+                    lblTime.Text = DateTime.Now.ToString();
+           
             }
             else
             {
