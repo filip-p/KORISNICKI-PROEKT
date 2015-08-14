@@ -314,3 +314,6 @@ color: #FFF;
 .h1 small#contactForm  {
 font-size: 24px;
 }
+#gvBooksInDB .buttonsMiddle{
+     vertical-align: middle !important;
+}

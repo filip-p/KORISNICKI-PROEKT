@@ -52,6 +52,8 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right" style="margin-right: 1em">
                             <li>
+                                <asp:LinkButton ID="lnkAdminPage" runat="server" Visible="false" OnClick="lnkAdminPage_Click"><span class="glyphicon glyphicon-user"></span> Admin Page</asp:LinkButton></li>
+                            <li>
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click"><span class="glyphicon glyphicon-log-in"></span> Login/Register</asp:LinkButton></li>
                             <li>
                                 <asp:LinkButton runat="server" class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2">Search</asp:LinkButton>

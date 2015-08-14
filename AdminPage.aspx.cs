@@ -24,6 +24,7 @@ public partial class _Default : System.Web.UI.Page
             if (Session["New"] != null)
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                lnkLoginRegister.OnClientClick = "return confirm('Are you sure you want to log out?');";
                 lbUser.Text = (string)Session["New"];
                 lbUser.Visible = true;
                 lblTime.Visible = true;
@@ -40,7 +41,7 @@ public partial class _Default : System.Web.UI.Page
             ispolniMaster();
             BindGridData();
         }
-
+      
     }
     protected void ispolniMaster()
     {
@@ -149,23 +150,21 @@ public partial class _Default : System.Web.UI.Page
 
     protected void gvBooksInDB_RowEditing(object sender, GridViewEditEventArgs e)
     {
-       
-      
         DataTable dt = (DataTable)ViewState["bookDataTable"];
         gvBooksInDB.EditIndex = e.NewEditIndex;
-      
         gvBooksInDB.DataSource = dt;
         gvBooksInDB.DataBind();
-        Label lbl1 = (Label)gvBooksInDB.Rows[e.NewEditIndex].FindControl("lblBookDescription");
-        lbl1.Visible = false;
-        TextBox tb1 = (TextBox)gvBooksInDB.Rows[e.NewEditIndex].FindControl("tbBookDescription");
-        tb1.Text = lbl1.Text;
-        tb1.ReadOnly = false;
-        tb1.Visible = true;
-        LinkButton lb = (LinkButton)gvBooksInDB.Rows[e.NewEditIndex].FindControl("linkButtonDelete");
-        lb.Visible = false;
-        LinkButton lb2 = (LinkButton)gvBooksInDB.Rows[e.NewEditIndex].FindControl("linkButtonCancel");
-        lb2.Visible = true;
+
+        Label labelDescription = (Label)gvBooksInDB.Rows[e.NewEditIndex].FindControl("lblBookDescription");
+        labelDescription.Visible = false;
+        TextBox textBoxDescriptionForEdit = (TextBox)gvBooksInDB.Rows[e.NewEditIndex].FindControl("tbBookDescription");
+        textBoxDescriptionForEdit.Text = labelDescription.Text;
+        textBoxDescriptionForEdit.ReadOnly = false;
+        textBoxDescriptionForEdit.Visible = true;
+        LinkButton lbDeleteButton = (LinkButton)gvBooksInDB.Rows[e.NewEditIndex].FindControl("linkButtonDelete");
+        lbDeleteButton.Visible = false;
+        LinkButton lbCancelButton = (LinkButton)gvBooksInDB.Rows[e.NewEditIndex].FindControl("linkButtonCancel");
+        lbCancelButton.Visible = true;
         
     }
     protected void gvBooksInDB_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -174,21 +173,21 @@ public partial class _Default : System.Web.UI.Page
         gvBooksInDB.EditIndex = -1;
         gvBooksInDB.DataSource = dt;
         gvBooksInDB.DataBind();
-        Label lbl1 = (Label)gvBooksInDB.Rows[e.RowIndex].FindControl("lblBookDescription");
-        lbl1.Visible = true;
-        TextBox tb1 = (TextBox)gvBooksInDB.Rows[e.RowIndex].FindControl("tbBookDescription");
-        tb1.ReadOnly = true;
-        tb1.Visible = false;
+        Label labelDescription = (Label)gvBooksInDB.Rows[e.RowIndex].FindControl("lblBookDescription");
+        labelDescription.Visible = true;
+        TextBox textBoxDescriptionForEdit = (TextBox)gvBooksInDB.Rows[e.RowIndex].FindControl("tbBookDescription");
+        textBoxDescriptionForEdit.ReadOnly = true;
+        textBoxDescriptionForEdit.Visible = false;
     }
     protected void gvBooksInDB_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         SqlConnection connection = new SqlConnection();
         connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
         SqlCommand command = new SqlCommand("UPDATE BookData SET BookDescription=@BookDescription WHERE Id=@Id", connection);
-        Label lbl = (Label)gvBooksInDB.Rows[e.RowIndex].FindControl("lblId");
-        command.Parameters.AddWithValue("@Id", lbl.Text);
-        TextBox tb1 = (TextBox)gvBooksInDB.Rows[e.RowIndex].FindControl("tbBookDescription");
-        command.Parameters.AddWithValue("@BookDescription", tb1.Text);
+        Label labelId = (Label)gvBooksInDB.Rows[e.RowIndex].FindControl("lblId");
+        command.Parameters.AddWithValue("@Id", labelId.Text);
+        TextBox textBoxDescriptionForEdit = (TextBox)gvBooksInDB.Rows[e.RowIndex].FindControl("tbBookDescription");
+        command.Parameters.AddWithValue("@BookDescription", textBoxDescriptionForEdit.Text);
         int effect = 0;
         try
         {
@@ -227,4 +226,36 @@ public partial class _Default : System.Web.UI.Page
         gvUsersInDB.DataBind();
     }
 
+    protected void lnkAdminPage_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AdminPage.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
+    }
+    protected void gvBooksInDB_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        SqlConnection connection = new SqlConnection();
+        connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
+        SqlCommand command = new SqlCommand("DELETE FROM BookData WHERE Id=@Id", connection);
+        Label lbl = (Label)gvBooksInDB.Rows[e.RowIndex].FindControl("lblId");
+        command.Parameters.AddWithValue("@Id", lbl.Text);
+        int effect = 0;
+        try
+        {
+            connection.Open();
+            effect = command.ExecuteNonQuery();
+        }
+        catch (Exception err)
+        {
+
+        }
+        finally
+        {
+            connection.Close();
+            gvBooksInDB.EditIndex = -1;
+        }
+        if (effect != 0)
+        {
+            BindGridData();
+        }
+    }
 }

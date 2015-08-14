@@ -56,6 +56,8 @@
                                 <asp:LinkButton ID="lnkContactAbout" runat="server" OnClick="lnkContactAbout_Click"><span class="glyphicon glyphicon-info-sign"></span> Contact/About</asp:LinkButton></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right" style="margin-right: 1em">
+                            <li>
+                                <asp:LinkButton ID="lnkAdminPage" Visible="false" runat="server" OnClick="lnkAdminPage_Click"><span class="glyphicon glyphicon-user"></span> Admin Page</asp:LinkButton></li>
                             <li class="active">
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click"><span class="glyphicon glyphicon-log-in"></span> Login/Register</asp:LinkButton></li>
                             <li>
@@ -91,6 +93,7 @@
                     </div>
                     <div>
                         &nbsp;
+                   
                     </div>
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
@@ -128,6 +131,7 @@
                     </div>
                     <div>
                         &nbsp;
+                   
                     </div>
 
                     <div class="form-horizontal" role="form">
@@ -203,7 +207,8 @@
                         <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
                             <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
                             - 
-                        <i class="icon-calendar"></i>
+                       
+                            <i class="icon-calendar"></i>
                             <asp:Label ID="lblTime" runat="server"></asp:Label>
                         </asp:Label>
                     </div>
@@ -223,6 +228,7 @@
                 <hr class="visible-xs visible-sm" />
                 <div class="col-md-3">
                     Copyright &copy; Book Exchange
+                   
                     <asp:Label ID="lblYear" runat="server"></asp:Label>
                 </div>
 

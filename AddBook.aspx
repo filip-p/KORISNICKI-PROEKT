@@ -60,6 +60,8 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right" style="margin-right: 1em">
                             <li>
+                                <asp:LinkButton ID="lnkAdminPage" runat="server" Visible="false" OnClick="lnkAdminPage_Click"><span class="glyphicon glyphicon-user"></span> Admin Page</asp:LinkButton></li>
+                            <li>
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click"><span class="glyphicon glyphicon-log-in"></span> Login/Register</asp:LinkButton></li>
                             <li>
                                 <asp:LinkButton runat="server" class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2">Search</asp:LinkButton>
@@ -128,10 +130,10 @@
                                 <asp:CompareValidator ID="exchangeAndPriceValidator" runat="server" ErrorMessage="You can either sell or exchange the book, not both!" ValidationGroup="AddBook" Operator="NotEqual" ControlToCompare="inputBookPrice" ControlToValidate="inputBookNeeded" Display="None"></asp:CompareValidator>
                                 <asp:RequiredFieldValidator ID="inputBookNeededValidator" runat="server" ErrorMessage="You need to specify if you are exchanging this book or not" ControlToValidate="inputBookNeeded" CssClass="alert-danger" Display="None" ValidationGroup="AddBook"></asp:RequiredFieldValidator>
                                 <div class="visible-md visible-lg">
-                                    <asp:Label runat="server" CssClass="alert-info ">If you don't want to exchange this book, type in "NONE", otherwise use <b>";"</b> after every book u want to exchange (ex. Book1,Book2,Book3,Book4).</asp:Label>
+                                    <asp:Label runat="server" CssClass="alert-info ">If you don't want to exchange this book, type in "NONE", otherwise use <b>";"</b> after every book you want to exchange (ex. Book1;Book2;Book3;Book4).</asp:Label>
                                 </div>
                                 <div class="visible-sm visible-xs">
-                                    <asp:Label runat="server" CssClass="alert-info " Style="font-size: x-small">If you don't want to exchange this book, type in "NONE", otherwise use "," after every book u want to exchange (ex. Book1,Book2,Book3,Book4).</asp:Label>
+                                    <asp:Label runat="server" CssClass="alert-info " Style="font-size: x-small">If you don't want to exchange this book, type in "NONE", otherwise use ";" after every book you want to exchange (ex. Book1;Book2;Book3;Book4).</asp:Label>
                                 </div>
                                 <asp:TextBox ID="inputBookNeeded" class="form-control" placeholder="Books that can be exchanged for this item" runat="server" EnableViewState="False" ValidationGroup="AddBook"></asp:TextBox>
                             </div>
@@ -147,6 +149,7 @@
                             </div>
                             <div>
                                 &nbsp;
+                           
                             </div>
                             <div class="row visible-md visible-lg">
                                 <div class="col-sm-6">
@@ -162,6 +165,7 @@
                                 </div>
                                 <div>
                                     &nbsp;
+                               
                                 </div>
                                 <div class="col-sm-6">
                                     <asp:Button ID="submitBookSm" runat="server" class="btn btn-primary btn-block " Text="SUBMIT" OnClick="submitBook_Click" ValidationGroup="AddBook"></asp:Button>
@@ -169,7 +173,7 @@
                             </div>
                         </div>
                     </div>
-                <%--end Form for adding a new book--%>
+                    <%--end Form for adding a new book--%>
                 </div>
                 <%--C3 Chart with Registered Users / Books added ratio--%>
                 <div class="col-md-6">
@@ -195,7 +199,8 @@
                         <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
                             <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
                             - 
-                        <i class="icon-calendar"></i>
+                       
+                            <i class="icon-calendar"></i>
                             <asp:Label ID="lblTime" runat="server"></asp:Label>
                         </asp:Label>
                     </div>
@@ -215,6 +220,7 @@
                 <hr class="visible-xs visible-sm" />
                 <div class="col-md-3">
                     Copyright &copy; Book Exchange
+                   
                     <asp:Label ID="lblYear" runat="server"></asp:Label>
                 </div>
 

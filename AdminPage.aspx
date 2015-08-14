@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="UTF-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -15,8 +15,9 @@
     <!-- Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <title>Book Exchange Home</title>
-
+    <title>Book Exchange Admin Page</title>
+     <!-- jQuery -->
+        <script src="js/jquery.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -44,7 +45,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-collapse-3" style="font-size: 1em;">
                         <ul class="nav navbar-nav ">
-                            <li class="active">
+                            <li>
                                 <asp:LinkButton ID="lnkButtonHome" runat="server" OnClick="lnkButtonHome_Click"><span class="glyphicon glyphicon-home"></span> Home</asp:LinkButton></li>
                             <li>
                                 <asp:LinkButton ID="lnkCatalog" runat="server" OnClick="lnkCatalog_Click"><span class="glyphicon glyphicon-list-alt"></span> Catalog</asp:LinkButton></li>
@@ -52,6 +53,8 @@
                                 <asp:LinkButton ID="lnkContactAbout" runat="server" OnClick="lnkContactAbout_Click"><span class="glyphicon glyphicon-info-sign"></span> Contact/About</asp:LinkButton></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right" style="margin-right: 1em">
+                            <li class="active">
+                                <asp:LinkButton ID="lnkAdminPage" runat="server" OnClick="lnkAdminPage_Click"><span class="glyphicon glyphicon-user"></span> Admin Page</asp:LinkButton></li>
                             <li>
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click"><span class="glyphicon glyphicon-log-in"></span> Login/Register</asp:LinkButton></li>
                             <li>
@@ -109,7 +112,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header text-center">Books in the database</h1>
-                        <asp:GridView ID="gvBooksInDB" CssClass="table table-hover table-responsive" Style="text-transform: none" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" PageSize="3" OnRowCancelingEdit="gvBooksInDB_RowCancelingEdit" OnRowEditing="gvBooksInDB_RowEditing" OnRowUpdating="gvBooksInDB_RowUpdating" OnPageIndexChanging="gvBooksInDB_PageIndexChanging">
+                        <asp:GridView ID="gvBooksInDB" CssClass="table table-hover table-responsive" Style="text-transform: none" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" PageSize="3" OnRowCancelingEdit="gvBooksInDB_RowCancelingEdit" OnRowEditing="gvBooksInDB_RowEditing" OnRowUpdating="gvBooksInDB_RowUpdating" OnPageIndexChanging="gvBooksInDB_PageIndexChanging" OnRowDeleting="gvBooksInDB_RowDeleting">
                             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                             <Columns>
                                 <asp:TemplateField HeaderText="<h3>Book Name</h3>" HeaderStyle-CssClass="col-md-3 text-center">
@@ -156,25 +159,25 @@
                                     <HeaderStyle CssClass="col-md-3 text-center"></HeaderStyle>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField ShowHeader="False">
+                                <asp:TemplateField ShowHeader="False" ItemStyle-CssClass="buttonsMiddle">
                                     <EditItemTemplate>
                                         <div class="text-center">
-                                            <asp:LinkButton ID="linkButtonUpdate" runat="server" CssClass="btn btn-primary" CausesValidation="True" CommandName="Update" Text="Update"></asp:LinkButton>
+                                            <asp:LinkButton ID="linkButtonUpdate" runat="server" CssClass="btn btn-primary" CausesValidation="True" CommandName="Update"><asp:Label runat="server" CssClass="glyphicon glyphicon-ok"></asp:Label> Update</asp:LinkButton>
                                         </div>
                                     </EditItemTemplate>
                                     <ItemTemplate>
                                         <div class="text-center">
-                                            <asp:LinkButton ID="linkButtonEdit" CssClass="btn btn-info" runat="server" CausesValidation="False" CommandName="Edit" Text="Edit"></asp:LinkButton>
+                                            <asp:LinkButton ID="linkButtonEdit" CssClass="btn btn-info" runat="server" CausesValidation="False" CommandName="Edit"><asp:Label runat="server" CssClass="glyphicon glyphicon-edit"></asp:Label> Edit</asp:LinkButton>
                                         </div>
                                     </ItemTemplate>
                                     <HeaderStyle CssClass="col-md-1 text-center"></HeaderStyle>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField ShowHeader="False">
+                                <asp:TemplateField ShowHeader="False" ItemStyle-CssClass="buttonsMiddle">
                                     <ItemTemplate>
                                         <div class="text-center">
-                                            <asp:LinkButton Visible="false" ID="linkButtonCancel" runat="server" CssClass="btn btn-warning" CausesValidation="False" CommandName="Cancel" Text="Cancel"></asp:LinkButton>
-                                            <asp:LinkButton ID="linkButtonDelete" runat="server" CssClass="btn btn-danger" CausesValidation="False" CommandName="Delete" Text="Delete"></asp:LinkButton>
+                                            <asp:LinkButton Visible="false" ID="linkButtonCancel" runat="server" CssClass="btn btn-danger" CausesValidation="False" CommandName="Cancel"><asp:Label runat="server" CssClass="glyphicon glyphicon-remove"></asp:Label> Cancel</asp:LinkButton>
+                                            <asp:LinkButton ID="linkButtonDelete" runat="server" CssClass="btn btn-warning" CausesValidation="False" CommandName="Delete" OnClientClick="return confirm('Are you sure you want to delete that item?');" ><asp:Label runat="server" CssClass="glyphicon glyphicon-trash"></asp:Label> Delete</asp:LinkButton>
                                         </div>
                                     </ItemTemplate>
                                     <HeaderStyle CssClass="col-md-1 text-center"></HeaderStyle>
@@ -244,8 +247,7 @@
                 </div>
             </footer>
         </div>
-        <!-- jQuery -->
-        <script src="js/jquery.js"></script>
+       
 
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>

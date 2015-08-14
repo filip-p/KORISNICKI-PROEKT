@@ -13,7 +13,12 @@ public partial class ContactAbout : System.Web.UI.Page
         {
             if (Session["New"] != null)
             {
-              
+
+                if ((string)Session["New"] == "admin")
+                {
+                    lnkAdminPage.Visible = true;
+
+                }
                     lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
                     lbUser.Text = (string)Session["New"];
                     lbUser.Visible = true;
@@ -33,9 +38,16 @@ public partial class ContactAbout : System.Web.UI.Page
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Home.aspx", false);
-        Context.ApplicationInstance.CompleteRequest();
-
+        if ((string)Session["New"] == "admin")
+        {
+            Response.Redirect("Home.aspx?admin=true", false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
+        else
+        {
+            Response.Redirect("Home.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
     }
     protected void lnkWishlist_Click(object sender, EventArgs e)
     {
@@ -91,5 +103,10 @@ public partial class ContactAbout : System.Web.UI.Page
         Response.Redirect("Home.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
 
+    }
+    protected void lnkAdminPage_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AdminPage.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
     }
 }

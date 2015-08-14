@@ -14,6 +14,11 @@ public partial class Login : System.Web.UI.Page
 
         if (this.IsPostBack)
         {
+            if ((string)Session["New"] == "admin")
+            {
+                lnkAdminPage.Visible = true;
+
+            }
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
             conn.Open();
@@ -37,6 +42,7 @@ public partial class Login : System.Web.UI.Page
             {
                 
                     lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                    lnkLoginRegister.OnClientClick = "return confirm('Are you sure you want to log out?');";
                     lbUser.Text = (string)Session["New"];
                     lbUser.Visible = true;
                     lblTime.Visible = true;
@@ -82,8 +88,16 @@ public partial class Login : System.Web.UI.Page
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Home.aspx", false);
-        Context.ApplicationInstance.CompleteRequest();
+        if ((string)Session["New"] == "admin")
+        {
+            Response.Redirect("Home.aspx?admin=true", false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
+        else
+        {
+            Response.Redirect("Home.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
     }
     protected void lnkWishlist_Click(object sender, EventArgs e)
     {
@@ -208,5 +222,10 @@ public partial class Login : System.Web.UI.Page
         }
 
         conn.Close();
+    }
+    protected void lnkAdminPage_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AdminPage.aspx", false);
+        Context.ApplicationInstance.CompleteRequest();
     }
 }

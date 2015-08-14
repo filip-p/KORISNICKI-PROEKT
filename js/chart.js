@@ -1,7 +1,6 @@
 var adminChart;
 var donutChart;
-$(document).ready(function () {
-
+function chartData(){
     var books = $('input[id$=booksNumber]').val();
     var users = $('input[id$=usersNumber]').val();
     adminChart = c3.generate({
@@ -17,5 +16,12 @@ $(document).ready(function () {
             onmouseover: function (d, i) { console.log("onmouseover", d, i); },
             onmouseout: function (d, i) { console.log("onmouseout", d, i); }
         }
+
+
     });
+}
+$(document).ready(function(){
+    // we call the function
+    chartData();
 });
+
