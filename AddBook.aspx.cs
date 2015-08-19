@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -38,10 +39,14 @@ public partial class AddBook : System.Web.UI.Page
                 Response.Redirect("Login.aspx?err=2", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
-            booksNumber.Value = getNumberOfItems("BookData").ToString();
-            usersNumber.Value = getNumberOfItems("UserData").ToString();
+            putNumbersInHiddenValues();
             lblYear.Text = DateTime.Now.Year.ToString();
         }
+    }
+    protected void putNumbersInHiddenValues()
+    {
+        booksNumber.Value = getNumberOfItems("BookData").ToString();
+        usersNumber.Value = getNumberOfItems("UserData").ToString();
     }
     protected void lnkButtonHome_Click(object sender, EventArgs e)
     {
@@ -156,14 +161,14 @@ public partial class AddBook : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@bdes", inputBookDescription.Text);
                 cmd.Parameters.Add("@bimg", SqlDbType.Image).Value = imgbyte;
                 string bookNeeded = inputBookNeeded.Text.Trim();
-                if (!(bookNeeded.ToUpper().Equals("NONE")))
+                if (!(bookNeeded.ToUpper().Equals("NONE")) || bookNeeded.Length!=0)
                     cmd.Parameters.AddWithValue("@bnfe", bookNeeded);
                 else
                 {
                     cmd.Parameters.AddWithValue("@bnfe", DBNull.Value);
                 }
                 string bookPrice = inputBookPrice.Text.Trim();
-                if (!(bookPrice.ToUpper().Equals("0")))
+                if (!(bookPrice.ToUpper().Equals("0")) || bookPrice.Length!=0)
                     cmd.Parameters.AddWithValue("@bpri", bookPrice + " $");
                 else
                 {
@@ -181,7 +186,8 @@ public partial class AddBook : System.Web.UI.Page
                     inputBookNeeded.Text = "";
                     inputBookPrice.Text = "";
                     inputBookTitle.Text = "";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "chartData", "chartData();", true);
+                    putNumbersInHiddenValues();
+                    ClientScript.RegisterStartupScript(this.GetType(), "GraphScript", "chartData();", false);
                 }
             }
             catch (Exception err)

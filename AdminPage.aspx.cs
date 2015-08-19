@@ -38,12 +38,12 @@ public partial class _Default : System.Web.UI.Page
                 footerLbl.Visible = false;
             }
             lblYear.Text = DateTime.Now.Year.ToString();
-            ispolniMaster();
-            BindGridData();
+            bindUsersGridData();
+            bindBooksGridData();
         }
       
     }
-    protected void ispolniMaster()
+    protected void bindUsersGridData()
     {
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
@@ -72,7 +72,7 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
-    protected void BindGridData()
+    protected void bindBooksGridData()
     {
         SqlConnection connection = new SqlConnection();
         connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
@@ -205,7 +205,7 @@ public partial class _Default : System.Web.UI.Page
         }
         if (effect != 0)
         {
-            BindGridData();
+            bindBooksGridData();
         }
         
     }
@@ -255,7 +255,7 @@ public partial class _Default : System.Web.UI.Page
         }
         if (effect != 0)
         {
-            BindGridData();
+            bindBooksGridData();
         }
     }
 }

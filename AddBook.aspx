@@ -14,7 +14,7 @@
     <link href="fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
-
+        <script src="js/chart.js"></script>
     <link href="css/c3.css" rel="stylesheet">
     <!-- Fonts -->
     <title>Book Exchange Book Add Page</title>
@@ -235,7 +235,7 @@
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap.js"></script>
-        <script src="js/chart.js"></script>
+    
         <!-- C3 Charts JavaScript -->
         <script src="js/d3.min.js"></script>
         <script src="js/c3.min.js"></script>
