@@ -60,9 +60,9 @@
                                 <asp:LinkButton ID="lnkContactAbout" runat="server" OnClick="lnkContactAbout_Click"><span class="glyphicon glyphicon-info-sign"></span> Contact/About</asp:LinkButton></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right" style="margin-right: 1em">
-                              <li>
+                            <li>
                                 <asp:LinkButton ID="lnkAdminPage" runat="server" Visible="false" OnClick="lnkAdminPage_Click"><span class="glyphicon glyphicon-user"></span> Admin Page</asp:LinkButton></li>
-                           
+
                             <li>
                                 <asp:LinkButton ID="lnkLoginRegister" runat="server" OnClick="lnkLoginRegister_Click"><span class="glyphicon glyphicon-log-in"></span> Login/Register</asp:LinkButton></li>
                             <li>
@@ -163,7 +163,7 @@
             <%--end Contact Form--%>
             <hr />
 
-            <%--Live Chat--%>           
+            <%--Live Chat--%>
             <div class="row">
                 <div class="col-md-2">&nbsp;</div>
                 <div class="col-md-8 text-center">
@@ -260,54 +260,56 @@
                 </div>
             </div>
             <%--end Google Maps embed iframe--%>
-
-
-
-
-
-            <footer class="footer text-center">
-                <hr />
-                <div class="col-md-5">
-                    <div>
-                        <ul class="social-network social-circle foot">
-                            <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
-                            <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
-                            <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
-                            - 
+        </div>
+        <footer class="footer text-center">
+            <hr />
+            <div class="col-md-5">
+                <div>
+                    <ul class="social-network social-circle foot">
+                        <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
+                        <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
+                        - 
                        
                             <i class="icon-calendar"></i>
-                            <asp:Label ID="lblTime" runat="server"></asp:Label>
-                        </asp:Label>
-                    </div>
+                        <asp:Label ID="lblTime" runat="server"></asp:Label>
+                    </asp:Label>
                 </div>
-                <hr class="visible-xs visible-sm" />
-                <div class="col-md-4 ">
-                    <h5 class="">Join our Mailing List for special offers, discounts and updates.</h5>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="E-mail address">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Join!</button>
-                        </span>
+            </div>
+            <hr class="visible-xs visible-sm" />
+            <div class="col-md-4 ">
+                <h5 class="">Join our Mailing List for special offers, discounts and updates.</h5>
+                <div class="input-group">
+                    <div>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="The E-mail field must not be empty" ValidationGroup="MailList" ControlToValidate="tbJoinMailList" ForeColor="#CC0000"></asp:RequiredFieldValidator>
                     </div>
-                    <!-- /input-group -->
+                    <div>
+                        <asp:RegularExpressionValidator ID="emailValidator" runat="server" ErrorMessage="The Email format is Invalid" ValidationGroup="MailList" ControlToValidate="tbJoinMailList" SetFocusOnError="True" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ForeColor="#CC0000"></asp:RegularExpressionValidator>
+                    </div>
+                    <asp:TextBox ID="tbJoinMailList" CssClass="form-control" Placeholder="E-mail address" runat="server" ValidationGroup="MailList"></asp:TextBox>
+                    <div>&nbsp;</div>
+                    <div>&nbsp;</div>
+                    <asp:Label runat="server" class="input-group-btn">
+                        <asp:Button runat="server" ID="btnJoinMailList" class="btn btn-default" Text="Join!" type="button" OnClick="btnJoinMailList_Click" ValidationGroup="MailList"></asp:Button>
+                    </asp:Label>
+                </div>
+                <!-- /input-group -->
 
-                </div>
-                <hr class="visible-xs visible-sm" />
-                <div class="col-md-3">
-                    Copyright &copy; Book Exchange
+            </div>
+            <hr class="visible-xs visible-sm" />
+            <div class="col-md-3">
+                Copyright &copy; Book Exchange
                    
                     <asp:Label ID="lblYear" runat="server"></asp:Label>
-                </div>
-
-            </footer>
-        </div>
+            </div>
+        </footer>
 
 
 

@@ -161,7 +161,7 @@ public partial class AddBook : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@bdes", inputBookDescription.Text);
                 cmd.Parameters.Add("@bimg", SqlDbType.Image).Value = imgbyte;
                 string bookNeeded = inputBookNeeded.Text.Trim();
-                if (!(bookNeeded.ToUpper().Equals("NONE")) || bookNeeded.Length!=0)
+                if (!bookNeeded.ToUpper().Equals("NONE"))
                     cmd.Parameters.AddWithValue("@bnfe", bookNeeded);
                 else
                 {
@@ -211,5 +211,13 @@ public partial class AddBook : System.Web.UI.Page
     {
         Response.Redirect("AdminPage.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
+    }
+    protected void btnJoinMailList_Click(object sender, EventArgs e)
+    {
+        Application.Lock();
+        MailingList ml = new MailingList();
+        string result = ml.AddRecipient(tbJoinMailList.Text);
+        tbJoinMailList.Text = result;
+        Application.UnLock();
     }
 }

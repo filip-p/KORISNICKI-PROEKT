@@ -404,4 +404,12 @@ public partial class Catalog : System.Web.UI.Page
         Response.Redirect("AdminPage.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
+    protected void btnJoinMailList_Click(object sender, EventArgs e)
+    {
+        Application.Lock();
+        MailingList ml = new MailingList();
+        string result = ml.AddRecipient(tbJoinMailList.Text);
+        tbJoinMailList.Text = result;
+        Application.UnLock();
+    }
 }

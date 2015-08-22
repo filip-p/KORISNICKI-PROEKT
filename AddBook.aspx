@@ -14,7 +14,7 @@
     <link href="fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
-        <script src="js/chart.js"></script>
+    <script src="js/chart.js"></script>
     <link href="css/c3.css" rel="stylesheet">
     <!-- Fonts -->
     <title>Book Exchange Book Add Page</title>
@@ -182,51 +182,57 @@
                 </div>
                 <%--end C3 Chart with Registered Users / Books added ratio--%>
             </div>
-            <%--Footer--%>
-            <footer class="footer text-center">
-                <hr />
-                <div class="col-md-5">
-                    <div>
-                        <ul class="social-network social-circle foot">
-                            <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
-                            <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
-                            <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
-                            - 
+        </div>
+
+        <footer class="footer text-center">
+            <hr />
+            <div class="col-md-5">
+                <div>
+                    <ul class="social-network social-circle foot">
+                        <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
+                        <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
+                        - 
                        
                             <i class="icon-calendar"></i>
-                            <asp:Label ID="lblTime" runat="server"></asp:Label>
-                        </asp:Label>
-                    </div>
+                        <asp:Label ID="lblTime" runat="server"></asp:Label>
+                    </asp:Label>
                 </div>
-                <hr class="visible-xs visible-sm" />
-                <div class="col-md-4 ">
-                    <h5 class="">Join our Mailing List for special offers, discounts and updates.</h5>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="E-mail address">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Join!</button>
-                        </span>
+            </div>
+            <hr class="visible-xs visible-sm" />
+            <div class="col-md-4 ">
+                <h5 class="">Join our Mailing List for special offers, discounts and updates.</h5>
+                <div class="input-group">
+                    <div>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="The E-mail field must not be empty" ValidationGroup="MailList" ControlToValidate="tbJoinMailList" ForeColor="#CC0000"></asp:RequiredFieldValidator>
                     </div>
-                    <!-- /input-group -->
+                    <div>
+                        <asp:RegularExpressionValidator ID="emailValidator" runat="server" ErrorMessage="The Email format is Invalid" ValidationGroup="MailList" ControlToValidate="tbJoinMailList" SetFocusOnError="True" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ForeColor="#CC0000"></asp:RegularExpressionValidator>
+                    </div>
+                    <asp:TextBox ID="tbJoinMailList" CssClass="form-control" Placeholder="E-mail address" runat="server" ValidationGroup="MailList"></asp:TextBox>
+                    <div>&nbsp;</div>
+                    <div>&nbsp;</div>
+                    <asp:Label runat="server" class="input-group-btn">
+                        <asp:Button runat="server" ID="btnJoinMailList" class="btn btn-default" Text="Join!" type="button" OnClick="btnJoinMailList_Click" ValidationGroup="MailList"></asp:Button>
+                    </asp:Label>
+                </div>
+                <!-- /input-group -->
 
-                </div>
-                <hr class="visible-xs visible-sm" />
-                <div class="col-md-3">
-                    Copyright &copy; Book Exchange
+            </div>
+            <hr class="visible-xs visible-sm" />
+            <div class="col-md-3">
+                Copyright &copy; Book Exchange
                    
                     <asp:Label ID="lblYear" runat="server"></asp:Label>
-                </div>
-
-            </footer>
-            <%--end Footer--%>
-        </div>
+            </div>
+        </footer>
         <asp:HiddenField ID="booksNumber" runat="server" />
         <asp:HiddenField ID="usersNumber" runat="server" />
 
@@ -235,7 +241,7 @@
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap.js"></script>
-    
+
         <!-- C3 Charts JavaScript -->
         <script src="js/d3.min.js"></script>
         <script src="js/c3.min.js"></script>

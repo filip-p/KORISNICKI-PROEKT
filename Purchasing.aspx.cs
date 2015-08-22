@@ -21,13 +21,13 @@ public partial class Purchasing : System.Web.UI.Page
                     lnkAdminPage.Visible = true;
 
                 }
-                    lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
-                    lnkLoginRegister.OnClientClick = "return confirm('Are you sure you want to log out?');";
-                    lbUser.Text = (string)Session["New"];
-                    lbUser.Visible = true;
-                    lblTime.Visible = true;
-                    lblTime.Text = DateTime.Now.ToString();
-             
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                lnkLoginRegister.OnClientClick = "return confirm('Are you sure you want to log out?');";
+                lbUser.Text = (string)Session["New"];
+                lbUser.Visible = true;
+                lblTime.Visible = true;
+                lblTime.Text = DateTime.Now.ToString();
+
             }
             else
             {
@@ -174,5 +174,13 @@ public partial class Purchasing : System.Web.UI.Page
             }
         }
         return amount;
+    }
+    protected void btnJoinMailList_Click(object sender, EventArgs e)
+    {
+        Application.Lock();
+        MailingList ml = new MailingList();
+        string result = ml.AddRecipient(tbJoinMailList.Text);
+        tbJoinMailList.Text = result;
+        Application.UnLock();
     }
 }

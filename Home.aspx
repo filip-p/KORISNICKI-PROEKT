@@ -203,12 +203,18 @@
             <div class="col-md-4 ">
                 <h5 class="">Join our Mailing List for special offers, discounts and updates.</h5>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="E-mail address">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Join!</button>
-                    </span>
-                </div>
-                <!-- /input-group -->
+                    <div>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="The E-mail field must not be empty" ValidationGroup="MailList" ControlToValidate="tbJoinMailList" ForeColor="#CC0000"></asp:RequiredFieldValidator></div>
+                    <div>
+                        <asp:RegularExpressionValidator ID="emailValidator" runat="server" ErrorMessage="The Email format is Invalid" ValidationGroup="MailList" ControlToValidate="tbJoinMailList" SetFocusOnError="True" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ForeColor="#CC0000"></asp:RegularExpressionValidator></div>
+                <asp:TextBox ID="tbJoinMailList" CssClass="form-control" Placeholder="E-mail address" runat="server" ValidationGroup="MailList"></asp:TextBox>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <asp:Label runat="server" class="input-group-btn">
+                    <asp:Button runat="server" ID="btnJoinMailList" class="btn btn-default" Text="Join!" type="button" OnClick="btnJoinMailList_Click" ValidationGroup="MailList"></asp:Button>
+                </asp:Label>
+            </div>
+            <!-- /input-group -->
 
             </div>
             <hr class="visible-xs visible-sm" />

@@ -287,5 +287,13 @@ public partial class _Default : System.Web.UI.Page
             bindUsersGridData();
         }
     }
+    protected void btnJoinMailList_Click(object sender, EventArgs e)
+    {
+        Application.Lock();
+        MailingList ml = new MailingList();
+        string result = ml.AddRecipient(tbJoinMailList.Text);
+        tbJoinMailList.Text = result;
+        Application.UnLock();
+    }
 
 }

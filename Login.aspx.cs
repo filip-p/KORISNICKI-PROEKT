@@ -177,7 +177,8 @@ public partial class Login : System.Web.UI.Page
             command.ExecuteNonQuery();
             tbHasUser.Visible = true;
             tbHasUser.Text = "Registration was successful, you can now login with your new account and welcome to BookExchange";
-        
+            if(chkBoxMailList.Checked)
+            JoinMailListProcedure(inputEmail.Text,false);
         }
         catch (Exception e)
         {
@@ -227,5 +228,18 @@ public partial class Login : System.Web.UI.Page
     {
         Response.Redirect("AdminPage.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
+    }
+    protected void btnJoinMailList_Click(object sender, EventArgs e)
+    {
+        JoinMailListProcedure(tbJoinMailList.Text,true);
+    }
+    private void JoinMailListProcedure(string email, bool hardJoin)
+    {
+        Application.Lock();
+        MailingList ml = new MailingList();
+        string result = ml.AddRecipient(email);
+        if(hardJoin)
+        tbJoinMailList.Text = result;
+        Application.UnLock();
     }
 }

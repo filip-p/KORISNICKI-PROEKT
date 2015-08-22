@@ -12,10 +12,10 @@ public partial class Home : System.Web.UI.Page
     {
         if (!this.IsPostBack)
         {
-            
+
             if (Session["New"] != null)
             {
-                
+
                 if ((string)Session["New"] == "admin")
                 {
                     if (Request.QueryString["admin"] == null)
@@ -24,21 +24,20 @@ public partial class Home : System.Web.UI.Page
                         Context.ApplicationInstance.CompleteRequest();
                     }
                     else
-                    {                       
-                            lnkAdminPage.Visible = true;                                               
+                    {
+                        lnkAdminPage.Visible = true;
                     }
                 }
 
-                else
-                {
-                    lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
-                    lnkLoginRegister.OnClientClick = "return confirm('Are you sure you want to log out?');";
-                    lbUser.Text = (string)Session["New"];
-                    lbUser.Visible = true;
-                    lblTime.Visible = true;
-                    lblTime.Text = DateTime.Now.ToString();
-                }
+
+                lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
+                lnkLoginRegister.OnClientClick = "return confirm('Are you sure you want to log out?');";
+                lbUser.Text = (string)Session["New"];
+                lbUser.Visible = true;
+                lblTime.Visible = true;
+                lblTime.Text = DateTime.Now.ToString();
             }
+
             else
             {
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-in\"></span> Login/Register";
@@ -119,4 +118,13 @@ public partial class Home : System.Web.UI.Page
         Response.Redirect("AdminPage.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
+    protected void btnJoinMailList_Click(object sender, EventArgs e)
+    {
+        Application.Lock();
+        MailingList ml = new MailingList();
+        string result = ml.AddRecipient(tbJoinMailList.Text);
+        tbJoinMailList.Text = result;
+        Application.UnLock();
+    }
+
 }

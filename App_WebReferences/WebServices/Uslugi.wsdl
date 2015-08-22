@@ -2,16 +2,6 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-      <s:element name="HelloWorld">
-        <s:complexType />
-      </s:element>
-      <s:element name="HelloWorldResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="ConvertCurrency">
         <s:complexType>
           <s:sequence>
@@ -27,35 +17,50 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="AddToMailingList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="emailAdress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddToMailingListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddToMailingListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
-  <wsdl:message name="HelloWorldSoapIn">
-    <wsdl:part name="parameters" element="tns:HelloWorld" />
-  </wsdl:message>
-  <wsdl:message name="HelloWorldSoapOut">
-    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
-  </wsdl:message>
   <wsdl:message name="ConvertCurrencySoapIn">
     <wsdl:part name="parameters" element="tns:ConvertCurrency" />
   </wsdl:message>
   <wsdl:message name="ConvertCurrencySoapOut">
     <wsdl:part name="parameters" element="tns:ConvertCurrencyResponse" />
   </wsdl:message>
+  <wsdl:message name="AddToMailingListSoapIn">
+    <wsdl:part name="parameters" element="tns:AddToMailingList" />
+  </wsdl:message>
+  <wsdl:message name="AddToMailingListSoapOut">
+    <wsdl:part name="parameters" element="tns:AddToMailingListResponse" />
+  </wsdl:message>
   <wsdl:portType name="UslugiSoap">
-    <wsdl:operation name="HelloWorld">
-      <wsdl:input message="tns:HelloWorldSoapIn" />
-      <wsdl:output message="tns:HelloWorldSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="ConvertCurrency">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method accepts a given currency as a parameter (dollar) and returns the value of the Book in the currency set by the user. It then connects to the Google Finance API and returns live currencies for multiple countries</wsdl:documentation>
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">You need an INTERNET Connection for this method to work. This method accepts a given currency as a parameter (dollar) and returns the value of the Book in the currency set by the user. It then connects to the Google Finance API and returns live currencies for multiple countries</wsdl:documentation>
       <wsdl:input message="tns:ConvertCurrencySoapIn" />
       <wsdl:output message="tns:ConvertCurrencySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToMailingList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method is a Mailing Service method to anyone who wants tojoin BookExchange Mailing List. The argument accepted is the email adress which is inputed and the recipient should get a mail back that he has been accepted in the mailing list.</wsdl:documentation>
+      <wsdl:input message="tns:AddToMailingListSoapIn" />
+      <wsdl:output message="tns:AddToMailingListSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="UslugiSoap" type="tns:UslugiSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="HelloWorld">
-      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+    <wsdl:operation name="ConvertCurrency">
+      <soap:operation soapAction="http://tempuri.org/ConvertCurrency" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -63,8 +68,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ConvertCurrency">
-      <soap:operation soapAction="http://tempuri.org/ConvertCurrency" style="document" />
+    <wsdl:operation name="AddToMailingList">
+      <soap:operation soapAction="http://tempuri.org/AddToMailingList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -75,8 +80,8 @@
   </wsdl:binding>
   <wsdl:binding name="UslugiSoap12" type="tns:UslugiSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="HelloWorld">
-      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+    <wsdl:operation name="ConvertCurrency">
+      <soap12:operation soapAction="http://tempuri.org/ConvertCurrency" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -84,8 +89,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ConvertCurrency">
-      <soap12:operation soapAction="http://tempuri.org/ConvertCurrency" style="document" />
+    <wsdl:operation name="AddToMailingList">
+      <soap12:operation soapAction="http://tempuri.org/AddToMailingList" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

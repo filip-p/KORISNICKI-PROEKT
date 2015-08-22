@@ -294,7 +294,7 @@
                                         <asp:ListItem Value="QAR">Qatari Rial (QAR)</asp:ListItem>
                                         <asp:ListItem Value="RON">Romanian Leu (RON)</asp:ListItem>
                                         <asp:ListItem Value="RUB">Russian Ruble (RUB)</asp:ListItem>
-                                        <asp:ListItem value="RSD">Serbian Dinar (RSD)</asp:ListItem>
+                                        <asp:ListItem Value="RSD">Serbian Dinar (RSD)</asp:ListItem>
                                         <asp:ListItem Value="SEK">Swedish Krona (SEK)</asp:ListItem>
                                         <asp:ListItem Value="SHP">St. Helena Pound (SHP)</asp:ListItem>
                                         <asp:ListItem Value="SKK">Slovak Koruna (SKK)</asp:ListItem>
@@ -311,11 +311,11 @@
 
                                 </div>
                                 <div class="form-group">
-                                     <label for="tbCurrency">Result</label>
+                                    <label for="tbCurrency">Result</label>
                                     <asp:TextBox ID="tbCurrency" CssClass="form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="text-center">
-                                    <asp:Button ID="currencyButton" runat="server" CssClass="btn btn-info" Text="Exchange Currency" OnClick="currencyButton_Click" UseSubmitBehavior="False"/>
+                                    <asp:Button ID="currencyButton" runat="server" CssClass="btn btn-info" Text="Exchange Currency" OnClick="currencyButton_Click" UseSubmitBehavior="False" />
                                 </div>
 
                             </div>
@@ -328,63 +328,69 @@
                             <asp:Image ID="imgPurchasing" runat="server" CssClass="img-responsive  " Style="display: initial" />
                         </div>
                         <h4>Book Name: <b>
-                            <asp:Label ID="namePurchasing" runat="server" style="text-transform:none;"></asp:Label></b></h4>
+                            <asp:Label ID="namePurchasing" runat="server" Style="text-transform: none;"></asp:Label></b></h4>
                         <h4>Book Author: <b>
-                            <asp:Label ID="authorPurchasing" runat="server" style="text-transform:none;"></asp:Label>
+                            <asp:Label ID="authorPurchasing" runat="server" Style="text-transform: none;"></asp:Label>
                         </b></h4>
                         <h4>Book Description: <b>
-                            <asp:Label ID="descriptionPurchasing" runat="server" style="text-transform:none;"></asp:Label></b></h4>
+                            <asp:Label ID="descriptionPurchasing" runat="server" Style="text-transform: none;"></asp:Label></b></h4>
                         <div class="text-center">
                             <asp:Label runat="server" CssClass="fa-4x" Text="Price: "></asp:Label><asp:Label ID="pricePurchasing" runat="server" CssClass="fa-4x"></asp:Label>
                         </div>
                     </div>
                     <%--</asp:Label>--%>
                 </div>
+            </div>
+        </div>
+        <footer class="footer text-center">
+            <hr />
+            <div class="col-md-5">
+                <div>
+                    <ul class="social-network social-circle foot">
+                        <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
+                        <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
+                        - 
+                       
+                            <i class="icon-calendar"></i>
+                        <asp:Label ID="lblTime" runat="server"></asp:Label>
+                    </asp:Label>
+                </div>
+            </div>
+            <hr class="visible-xs visible-sm" />
+            <div class="col-md-4 ">
+                <h5 class="">Join our Mailing List for special offers, discounts and updates.</h5>
+                <div class="input-group">
+                    <div>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="The E-mail field must not be empty" ValidationGroup="MailList" ControlToValidate="tbJoinMailList" ForeColor="#CC0000"></asp:RequiredFieldValidator>
+                    </div>
+                    <div>
+                        <asp:RegularExpressionValidator ID="emailValidator" runat="server" ErrorMessage="The Email format is Invalid" ValidationGroup="MailList" ControlToValidate="tbJoinMailList" SetFocusOnError="True" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ForeColor="#CC0000"></asp:RegularExpressionValidator>
+                    </div>
+                    <asp:TextBox ID="tbJoinMailList" CssClass="form-control" Placeholder="E-mail address" runat="server" ValidationGroup="MailList"></asp:TextBox>
+                    <div>&nbsp;</div>
+                    <div>&nbsp;</div>
+                    <asp:Label runat="server" class="input-group-btn">
+                        <asp:Button runat="server" ID="btnJoinMailList" class="btn btn-default" Text="Join!" type="button" OnClick="btnJoinMailList_Click" ValidationGroup="MailList"></asp:Button>
+                    </asp:Label>
+                </div>
+                <!-- /input-group -->
 
             </div>
-            <%--Footer--%>
-            <footer class="footer text-center">
-                <hr />
-                <div class="col-md-5">
-                    <div>
-                        <ul class="social-network social-circle foot">
-                            <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
-                            <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <asp:Label ID="footerLbl" runat="server">Logged in as: <i class="icon-user"></i>
-                            <asp:LinkButton ID="lbUser" runat="server"></asp:LinkButton>
-                            - 
-                        <i class="icon-calendar"></i>
-                            <asp:Label ID="lblTime" runat="server"></asp:Label>
-                        </asp:Label>
-                    </div>
-                </div>
-                <hr class="visible-xs visible-sm" />
-                <div class="col-md-4 ">
-                    <h5 class="">Join our Mailing List for special offers, discounts and updates.</h5>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="E-mail address">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Join!</button>
-                        </span>
-                    </div>
-                    <!-- /input-group -->
-
-                </div>
-                <hr class="visible-xs visible-sm" />
-                <div class="col-md-3">
-                    Copyright &copy; Book Exchange
+            <hr class="visible-xs visible-sm" />
+            <div class="col-md-3">
+                Copyright &copy; Book Exchange
+                   
                     <asp:Label ID="lblYear" runat="server"></asp:Label>
-                </div>
-
-            </footer>
-            <%--end Footer--%>
-        </div>
+            </div>
+        </footer>
 
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
