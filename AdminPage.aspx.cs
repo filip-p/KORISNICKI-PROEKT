@@ -258,4 +258,34 @@ public partial class _Default : System.Web.UI.Page
             bindBooksGridData();
         }
     }
+
+
+    protected void gvUsersInDB_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        SqlConnection connection = new SqlConnection();
+        connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
+        SqlCommand command = new SqlCommand("DELETE FROM UserData WHERE Id=@Id", connection);
+        
+        command.Parameters.AddWithValue("@Id", gvUsersInDB.SelectedRow.Cells[0].Text);
+        int effect = 0;
+        try
+        {
+            connection.Open();
+            effect = command.ExecuteNonQuery();
+        }
+        catch (Exception err)
+        {
+
+        }
+        finally
+        {
+            connection.Close();
+            gvUsersInDB.EditIndex = -1;
+        }
+        if (effect != 0)
+        {
+            bindUsersGridData();
+        }
+    }
+
 }

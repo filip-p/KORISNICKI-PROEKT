@@ -25,7 +25,7 @@ public partial class Catalog : System.Web.UI.Page
                 if ((string)Session["New"] == "admin")
                 {
                     lnkAdminPage.Visible = true;
-                                     
+
                 }
                 lnkLoginRegister.Text = "<span class=\"glyphicon glyphicon-log-out\"></span> Logout";
                 lbUser.Text = (string)Session["New"];
@@ -72,12 +72,12 @@ public partial class Catalog : System.Web.UI.Page
             scom = "SELECT Id, BookName, BookImage, BookAuthor, BookDescription, BookPrice, BookSellerUser,BookNeededForExchange FROM BookData WHERE BookName LIKE '%" + Name + "%'";
         }
         komanda.CommandText = scom;
-      
+
 
         try
         {
             connection.Open();
-           
+
             SqlDataReader reader = komanda.ExecuteReader();
 
             TableHeaderRow th = new TableHeaderRow();
@@ -118,120 +118,130 @@ public partial class Catalog : System.Web.UI.Page
             while (reader.Read())
             {
 
-                j++;
-                TableRow tr = new TableRow();
-                TableCell td = new TableCell();
-                Label spanBookName = new Label();
-                string BookName = reader["BookName"].ToString();
-                spanBookName.Text = "<h4 class=\"text-center\">" + BookName + "</h4>";
-                byte[] picData = (byte[])reader["BookImage"];
-                string imageBase64 = Convert.ToBase64String(picData);
-                string imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
-
-                Image im = new Image();
-                im.ImageUrl = imageSrc;
-                im.CssClass = "img-responsive";
-                im.Width = 300;
-                im.Height = 300;
-                td.Controls.Add(spanBookName);
-                td.Controls.Add(im);
-                td.CssClass = "col-sm-3";
-                tr.Cells.Add(td);
-
-                TableCell td2 = new TableCell();
-                td2.Text = "<h4 class=\"text-center\">" + reader["BookAuthor"].ToString() + "</h4><hr />" +
-                "<p>" + reader["BookDescription"].ToString() + "</p>";
-                td2.CssClass = "col-sm-4";
-                tr.Cells.Add(td2);
-
-                TableCell td3 = new TableCell();
-                string exchange = reader["BookNeededForExchange"].ToString();
-                bool buyable = true;
-                bool exchangeable = true;
-                string BookPrice = reader["BookPrice"].ToString();
-                if (reader["BookNeededForExchange"] != DBNull.Value)
+                if (sellerExistsInDatabase(reader["BookSellerUser"].ToString()))
                 {
-                    if (reader["BookPrice"] != DBNull.Value)
+                    j++;
+
+                    TableRow tr = new TableRow();
+                    TableCell td = new TableCell();
+                    Label spanBookName = new Label();
+                    string BookName = reader["BookName"].ToString();
+                    spanBookName.Text = "<h4 class=\"text-center\">" + BookName + "</h4>";
+                    byte[] picData = (byte[])reader["BookImage"];
+                    string imageBase64 = Convert.ToBase64String(picData);
+                    string imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
+
+                    Image im = new Image();
+                    im.ImageUrl = imageSrc;
+                    im.CssClass = "img-responsive";
+                    im.Width = 300;
+                    im.Height = 300;
+                    td.Controls.Add(spanBookName);
+                    td.Controls.Add(im);
+                    td.CssClass = "col-sm-3";
+                    tr.Cells.Add(td);
+
+                    TableCell td2 = new TableCell();
+                    td2.Text = "<h4 class=\"text-center\">" + reader["BookAuthor"].ToString() + "</h4><hr />" +
+                    "<p>" + reader["BookDescription"].ToString() + "</p>";
+                    td2.CssClass = "col-sm-4";
+                    tr.Cells.Add(td2);
+
+                    TableCell td3 = new TableCell();
+                    string exchange = reader["BookNeededForExchange"].ToString();
+                    bool buyable = true;
+                    bool exchangeable = true;
+                    string BookPrice = reader["BookPrice"].ToString();
+                    if (reader["BookNeededForExchange"] != DBNull.Value)
                     {
-                        td3.Text = "<h4 class=\"text-center\">" + reader["BookSellerUser"].ToString() + "</h4><hr />" +
-                            "<h4 class=\"text-center\">Price = " + reader["BookPrice"].ToString() + "</h4><hr /><p>Exchangeable for:</p><p>" + exchange + "</p><hr />";
+                        if (reader["BookPrice"] != DBNull.Value)
+                        {
+                            td3.Text = "<h4 class=\"text-center\">" + reader["BookSellerUser"].ToString() + "</h4><hr />" +
+                                "<h4 class=\"text-center\">Price = " + reader["BookPrice"].ToString() + "</h4><hr /><p>Exchangeable for:</p><p>" + exchange + "</p><hr />";
+                        }
+                        else
+                        {
+                            buyable = false;
+                            td3.Text = "<h4 class=\"text-center\">" + reader["BookSellerUser"].ToString() + "</h4><hr />" +
+                             "<h4 class=\"text-center\">The item is for Exchange ONLY!</h4><hr /><p>Exchangeable for:</p><p>" + exchange + "</p><hr />";
+                        }
                     }
                     else
                     {
-                        buyable = false;
+                        exchangeable = false;
                         td3.Text = "<h4 class=\"text-center\">" + reader["BookSellerUser"].ToString() + "</h4><hr />" +
-                         "<h4 class=\"text-center\">The item is for Exchange ONLY!</h4><hr /><p>Exchangeable for:</p><p>" + exchange + "</p><hr />";
+                            "<h4 class=\"text-center\">Price = " + reader["BookPrice"].ToString() + "</h4><hr /><p>This book is not exchangeable!</p><hr />";
                     }
-                }
-                else
-                {
-                    exchangeable = false;
-                    td3.Text = "<h4 class=\"text-center\">" + reader["BookSellerUser"].ToString() + "</h4><hr />" +
-                        "<h4 class=\"text-center\">Price = " + reader["BookPrice"].ToString() + "</h4><hr /><p>This book is not exchangeable!</p><hr />";
-                }
-                td3.CssClass = "col-sm-3";
-                tr.Cells.Add(td3);
+                    td3.CssClass = "col-sm-3";
+                    tr.Cells.Add(td3);
 
-                TableCell td4 = new TableCell();
-                td4.Style.Add(HtmlTextWriterStyle.VerticalAlign, "middle");
-                LinkButton btn = new LinkButton();
-                btn.ID = "btnBuy" + j;
-                btn.OnClientClick = "return confirm('Are you sure you want to buy \"" + BookName + "\" for \"" + BookPrice + "\"?');";
-                btn.Command += new CommandEventHandler(this.btn_Command);
-                btn.CommandArgument = reader["Id"].ToString();
-                btn.CssClass = "btn btn-success btn-block";
-                btn.Text = "<span class=\"fa fa-usd\"></span> Buy";
+                    TableCell td4 = new TableCell();
+                    td4.Style.Add(HtmlTextWriterStyle.VerticalAlign, "middle");
+                    LinkButton btn = new LinkButton();
+                    btn.ID = "btnBuy" + j;
+                    btn.OnClientClick = "return confirm('Are you sure you want to buy \"" + BookName + "\" for \"" + BookPrice + "\"?');";
+                    btn.Command += new CommandEventHandler(this.btn_Command);
+                    btn.CommandArgument = reader["Id"].ToString();
+                    btn.CssClass = "btn btn-success btn-block";
+                    btn.Text = "<span class=\"fa fa-usd\"></span> Buy";
 
 
-                LinkButton btn2 = new LinkButton();
+                    LinkButton btn2 = new LinkButton();
 
-                btn2.ID = "btnExchange" + j;
-                btn2.Command += new CommandEventHandler(this.btn_Command2);
-                btn2.CommandArgument = reader["Id"].ToString();
-                btn2.OnClientClick = "return confirm('Are you sure you want to exchange this book?');";
-                btn2.CssClass = "btn btn-info btn-block";
-                btn2.Text = "<span class=\"glyphicon glyphicon-transfer\"></span> Exchange";
-                ddll = new DropDownList();
-                if (buyable)
-                    td4.Controls.Add(btn);
-                if (exchangeable)
-                    td4.Controls.Add(btn2);
-
-                if (reader["BookSellerUser"].ToString().Equals(Session["New"].ToString()))
-                {
-                    btn.CssClass += " disabled";
-                    btn2.CssClass += " disabled";
-                    Label cantBuyLabel = new Label();
-                    if (exchangeable && buyable)
-                        cantBuyLabel.Text = "You can't buy or exchange this book because you are it's seller";
-                    else if (exchangeable && !buyable)
-                        cantBuyLabel.Text = "You can't exchange this book because you are it's seller";
-                    else if (!exchangeable && buyable)
-                        cantBuyLabel.Text = "You can't buy this book because you are it's seller";
-                    td4.Controls.Add(cantBuyLabel);
-                }
-                else
-                {
-                    string[] items = exchange.Split(';');
-                    for (int i = 0; i < items.Length; i++)
-                    {
-                        ddll.Items.Add(items[i]);
-                    }
-                    ddll.SelectedIndex = 0;
-                    ddll.ID = "ddl" + j;
-                    ddll.CssClass = "dropdownz";
-
-                    ddll.SelectedIndexChanged += new EventHandler(ddll_SelectedIndexChanged);
-                    ddlItem.Value = ddll.SelectedValue.ToString();
+                    btn2.ID = "btnExchange" + j;
+                    btn2.Command += new CommandEventHandler(this.btn_Command2);
+                    btn2.CommandArgument = reader["Id"].ToString();
+                    btn2.OnClientClick = "return confirm('Are you sure you want to exchange this book?');";
+                    btn2.CssClass = "btn btn-info btn-block";
+                    btn2.Text = "<span class=\"glyphicon glyphicon-transfer\"></span> Exchange";
+                    ddll = new DropDownList();
+                    if (buyable)
+                        td4.Controls.Add(btn);
                     if (exchangeable)
-                        td4.Controls.Add(ddll);
+                        td4.Controls.Add(btn2);
+
+                    if (reader["BookSellerUser"].ToString().Equals(Session["New"].ToString()))
+                    {
+                        btn.CssClass += " disabled";
+                        btn2.CssClass += " disabled";
+                        Label cantBuyLabel = new Label();
+                        if (exchangeable && buyable)
+                            cantBuyLabel.Text = "You can't buy or exchange this book because you are it's seller";
+                        else if (exchangeable && !buyable)
+                            cantBuyLabel.Text = "You can't exchange this book because you are it's seller";
+                        else if (!exchangeable && buyable)
+                            cantBuyLabel.Text = "You can't buy this book because you are it's seller";
+                        td4.Controls.Add(cantBuyLabel);
+                    }
+                    else
+                    {
+                        string[] items = exchange.Split(';');
+                        for (int i = 0; i < items.Length; i++)
+                        {
+                            ddll.Items.Add(items[i]);
+                        }
+                        ddll.SelectedIndex = 0;
+                        ddll.ID = "ddl" + j;
+                        ddll.CssClass = "dropdownz";
+
+                        ddll.SelectedIndexChanged += new EventHandler(ddll_SelectedIndexChanged);
+                        ddlItem.Value = ddll.SelectedValue.ToString();
+                        if (exchangeable)
+                            td4.Controls.Add(ddll);
+                    }
+
+
+                    td4.CssClass = "col-sm-2";
+                    tr.Cells.Add(td4);
+
+                    bookShowTable.Rows.Add(tr);
+                }
+                else
+                {
+                    deleteBookFromDbWithInvalidUserName(reader["Id"].ToString());
+
                 }
 
-
-                td4.CssClass = "col-sm-2";
-                tr.Cells.Add(td4);
-
-                bookShowTable.Rows.Add(tr);
             }
             reader.Close();
         }
@@ -250,6 +260,57 @@ public partial class Catalog : System.Web.UI.Page
             }
         }
 
+    }
+
+    private void deleteBookFromDbWithInvalidUserName(string idFromDB)
+    {
+        SqlConnection connection = new SqlConnection();
+        connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
+        SqlCommand command = new SqlCommand();
+        command.Connection = connection;
+        command.CommandText = "DELETE FROM BookData WHERE Id='" + idFromDB + "'";
+        try
+        {
+            connection.Open();
+            command.ExecuteNonQuery();
+        }
+        catch (Exception err)
+        {
+
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    private bool sellerExistsInDatabase(string userNameFromDB)
+    {
+        bool result = false;
+        SqlConnection connection = new SqlConnection();
+        connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
+        SqlCommand command = new SqlCommand();
+        command.Connection = connection;
+        command.CommandText = "SELECT count(*) FROM UserData WHERE username='" + userNameFromDB + "'";
+        try
+        {
+            connection.Open();
+            int temp = Convert.ToInt32(command.ExecuteScalar().ToString());
+            if (temp > 0)
+            {
+                result = true;
+            }
+
+        }
+        catch (Exception e)
+        {
+
+        }
+        finally
+        {
+            connection.Close();
+        }
+        return result;
     }
 
     protected void ddll_SelectedIndexChanged(object sender, EventArgs e)
@@ -280,7 +341,7 @@ public partial class Catalog : System.Web.UI.Page
             Response.Redirect("Home.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
         }
-       
+
     }
     protected void lnkWishlist_Click(object sender, EventArgs e)
     {

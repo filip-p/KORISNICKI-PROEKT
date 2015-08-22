@@ -150,4 +150,29 @@ public partial class Purchasing : System.Web.UI.Page
         Response.Redirect("AdminPage.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
+    protected void currencyButton_Click(object sender, EventArgs e)
+    {
+        string amount = getAmount();
+        WebServices.Uslugi exchangeService = new WebServices.Uslugi();
+        string result = exchangeService.ConvertCurrency(ddlCurrency.SelectedValue, amount);
+        tbCurrency.Text = result;
+        currencyButton.Focus();
+    }
+    private string getAmount()
+    {
+        string amount = "";
+        char[] priceChars = pricePurchasing.Text.ToCharArray();
+        foreach (char c in priceChars)
+        {
+            if (Char.IsDigit(c))
+            {
+                amount += c;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return amount;
+    }
 }

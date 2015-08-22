@@ -19,11 +19,11 @@ public partial class Login : System.Web.UI.Page
                 lnkAdminPage.Visible = true;
 
             }
-            SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
-            conn.Open();
+            SqlConnection connection = new SqlConnection();
+            connection.ConnectionString = ConfigurationManager.ConnectionStrings["UsersDBConnection"].ConnectionString;
+            connection.Open();
             string checkuser = "SELECT count(*) FROM UserData WHERE username='" + inputUsername.Text + "'";
-            SqlCommand command = new SqlCommand(checkuser, conn);
+            SqlCommand command = new SqlCommand(checkuser, connection);
             int temp = Convert.ToInt32(command.ExecuteScalar().ToString());
             if (temp > 0)
             {
@@ -31,7 +31,7 @@ public partial class Login : System.Web.UI.Page
                 tbHasUser.Text = "That Username already exists, please select a new one.";
                 used = true;
             }
-            conn.Close();
+            connection.Close();
         }
         else if (!this.IsPostBack)
         {
@@ -213,12 +213,12 @@ public partial class Login : System.Web.UI.Page
             }
             else
             {
-                tbLoggedIn.Text = "Password is incorrect";
+                tbLoggedIn.Text = "Username or Password is incorrect";
             }
         }
         else
         {
-            tbLoggedIn.Text = "Username is incorrect";
+            tbLoggedIn.Text = "Username or Password is incorrect";
         }
 
         conn.Close();

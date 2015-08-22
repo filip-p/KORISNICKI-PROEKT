@@ -82,7 +82,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header text-center">Users in the database</h1>
-                        <asp:GridView ID="gvUsersInDB" Style="text-transform: none" CssClass="table table-hover table-responsive" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AllowPaging="True" AutoGenerateColumns="False" OnPageIndexChanging="gvUsersInDB_PageIndexChanging" PageSize="3">
+                        <asp:GridView ID="gvUsersInDB" Style="text-transform: none" CssClass="table table-hover table-responsive" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AllowPaging="True" AutoGenerateColumns="False" OnPageIndexChanging="gvUsersInDB_PageIndexChanging" PageSize="3" OnRowDeleting="gvUsersInDB_RowDeleting">
                             <Columns>
                                 <asp:BoundField DataField="Id" HeaderText="User Id" ReadOnly="True" />
                                 <asp:BoundField DataField="username" HeaderText="Username" ReadOnly="True" />
@@ -90,7 +90,6 @@
                                 <asp:BoundField DataField="email" HeaderText="E-mail" ReadOnly="True" />
                                 <asp:BoundField DataField="faculty" HeaderText="Faculty" ReadOnly="True" />
                                 <asp:CommandField ShowSelectButton="True" />
-                                <asp:CommandField ShowEditButton="True" />
                                 <asp:CommandField ShowDeleteButton="True" />
                             </Columns>
                             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
